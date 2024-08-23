@@ -1,5 +1,3 @@
-Dưới đây là phiên bản Markdown được định dạng lại để trông đẹp hơn trên GitHub:
-
 ```md
 # Next.js Project
 
