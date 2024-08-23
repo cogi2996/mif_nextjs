@@ -39,7 +39,3 @@ The easiest way to deploy your Next.js app is via the [Vercel Platform](https://
 For more details on deployment, refer to the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
 ```
 
-Những thay đổi chính bao gồm:
-- Thêm các emoji để làm nổi bật các tiêu đề.
-- Sử dụng định dạng danh sách cho các câu lệnh cài đặt.
-- Sắp xếp lại và làm rõ các phần để dễ đọc hơn.
