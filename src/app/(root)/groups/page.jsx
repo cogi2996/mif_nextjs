@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Search } from 'lucide-react'
 import CardGroups from '@/components/card-groups'
+import { DialogCreateGroup } from '@/components/dialog-create-group'
 
 export default function Groups() {
     return (
@@ -31,7 +32,7 @@ export default function Groups() {
                         <Input type="text" placeholder="Tìm kiếm..." className="pr-10" />
                         <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                     </div>
-                    <Button size='sm'>Tạo nhóm</Button>
+                    <DialogCreateGroup/>
                 </div>
             </div>
 
