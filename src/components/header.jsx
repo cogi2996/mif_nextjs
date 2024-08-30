@@ -8,12 +8,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import BadgeIcon from "@/components/badge-icon"
 import { MenuProfile } from "@/components/menu-profile"
 import { NotificationPopover } from "@/components/popover-notification"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function Header() {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className="fixed w-full z-10">
+        <div className="fixed w-full z-10 drop-shadow-xl">
             <div className="flex items-center justify-between py-3 bg-background border-b xl:px-36 lg:px-2 md:px-2 px-1">
                 <div className="md:hidden flex items-center">
                     <Sheet open={open} onOpenChange={setOpen}>
@@ -79,7 +80,7 @@ export default function Header() {
                         <div className="flex items-center gap-4">
                             <div className="hidden md:block relative">
                                 <Input type="text" placeholder="Tìm kiếm..." className="pr-10" />
-                                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground " />
                             </div>
                             <NotificationPopover />
                             <Button variant="ghost" size="icon">
@@ -87,6 +88,7 @@ export default function Header() {
                                 <MessageCircle />
                                 <span className="sr-only">Messages</span>
                             </Button>
+                            <ModeToggle/>
                             <MenuProfile />
                         </div>
                 }

@@ -32,7 +32,7 @@ export function MainCarousel() {
                     delay: 3000,
                 }),
             ]}
-            className="w-full h-[300px] md:h-[450px] lg:h-[550px]"
+            className="w-full h-[300px] md:h-[450px] lg:h-[550px] drop-shadow-2xl rounded-lg"
         >
             <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (

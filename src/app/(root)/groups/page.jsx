@@ -11,7 +11,7 @@ import { DialogCreateGroup } from '@/components/dialog-create-group'
 
 export default function Groups() {
     return (
-        <div className="flex flex-col w-full min-h-screen mt-8">
+        <div className="flex flex-col w-full min-h-screen">
 
             <div>
                 <Title
@@ -25,7 +25,6 @@ export default function Groups() {
                     <Button size='sm'>Tất cả</Button>
                     <Button size='sm' variant='outline' className="hidden md:block">Nhóm bạn đã tạo</Button>
                     <Button size='sm' variant='outline' className="hidden md:block">Nhóm bạn tham gia</Button>
-                    <Button size='sm' variant='outline' className="hidden md:block">Khám phá</Button>
                 </div>
                 <div className='flex gap-2'>
                     <div className="hidden md:block relative">

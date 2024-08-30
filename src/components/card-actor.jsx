@@ -16,7 +16,7 @@ export default function CardActor({ ActorName, Rank }) {
                 <p className='flex justify-center text-base font-bold'>
                     {ActorName}
                 </p>
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center items-center gap-[2px]'>
                     <span className='text-sm'>#{Rank}(</span>
                     {
                         true

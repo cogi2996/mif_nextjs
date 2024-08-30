@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Home() {
   return (
-    <div className="w-full mt-8">
+    <div className="w-full">
 
       <div className="relative">
         <MainCarousel />
@@ -27,7 +27,7 @@ export default function Home() {
             <News />
             <News />
             <News />
-            <div className="w-full flex justify-center mt-12">
+            <div className="w-full flex justify-center mt-12 drop-shadow-lg">
               <Button>Xem thêm</Button>
             </div>
           </div>
@@ -39,9 +39,11 @@ export default function Home() {
             <CardFilm />
             <CardFilm />
             <CardFilm />
+            <CardFilm />
           </div>
           <Title title='Phim ngẫu nhiên' isMore='true' />
           <div className="grid gap-5">
+            <CardFilm />
             <CardFilm />
             <CardFilm />
             <CardFilm />

@@ -17,7 +17,7 @@ export default function CardGroups({ initialStatus }) {
     setJoinStatus('join')
   }
   return (
-    <Card className="group">
+    <Card className="drop-shadow-lg">
       <CardContent className="flex flex-col gap-2 p-0">
         <Image
           src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
@@ -29,7 +29,7 @@ export default function CardGroups({ initialStatus }) {
         <div className='p-2'>
           <div className='mb-2'>
             <h3 className="text-xl font-bold">Acme Developers</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-secondary-foreground bg-secondary inline-block px-2 rounded-full">
               Hành động
             </p>
             <div className='flex items-center gap-2'>
