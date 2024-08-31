@@ -14,7 +14,7 @@ export default function CardFilmHorizontal() {
                     className="rounded-lg object-cover"
                 />
                 <div className="grid gap-0.5">
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-medium line-clamp-2 ">Avengers: Endgame </h3>
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 ">Avengers: Endgame </h3>
                     <p className="text-muted-foreground text-sm">2023</p>
                     <p className="text-muted-foreground text-sm">2h30p</p>
                 </div>

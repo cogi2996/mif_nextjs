@@ -17,7 +17,7 @@ import { Input } from 'postcss'
 
 export default function Page() {
     const searchParams = useSearchParams()
-    const search = searchParams.get('search')
+    const search = searchParams.get('term')
     return (
         <div className='max-w-2xl mx-auto'>
             <div className='text-2xl font-bold'>

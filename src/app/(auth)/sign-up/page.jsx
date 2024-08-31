@@ -8,7 +8,7 @@ import { ForgetPassword } from '@/components/forget-password'
 export default function SignUp() {
     return (
         <div className="flex items-center justify-center">
-            <div className="mx-auto grid w-[350px] gap-6">
+            <div className="mx-auto grid w-fit gap-6">
                 <div className="grid gap-2 text-center">
                     <h1 className="text-3xl font-bold">Đăng ký</h1>
                     <p className="text-muted-foreground text-sm">

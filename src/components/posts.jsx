@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Forward, MessageCircle, Play } from 'lucide-react'
+import { Bookmark, Forward, MessageCircle, Play } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
@@ -84,8 +84,8 @@ export default function Posts({ className }) {
                     Bình luận
                 </Button>
                 <Button variant="ghost" className="gap-1 items-center rounded-full">
-                    <Forward />
-                    Chia sẻ
+                    <Bookmark />
+                    Lưu
                 </Button>
             </div>
         </div>

@@ -49,7 +49,7 @@ export default function Header() {
                 {/* Hiển thị logo trên màn hình lớn */}
                 <Link href="#" className="hidden md:flex items-center gap-2" prefetch={false}>
                     <Film />
-                    <span className="text-lg font-bold">Movie App</span>
+                    <span className="text-xl font-bold gap-2 tracking-[.25em]">MIF</span>
                 </Link>
 
                 {/* Navbar cho màn hình lớn */}

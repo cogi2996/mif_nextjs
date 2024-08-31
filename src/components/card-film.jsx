@@ -21,7 +21,7 @@ export default function CardFilm({ direction }) {
             </div>
 
             <div className="grid gap-2">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-medium line-clamp-2 max-w-44">Avengers: Endgame </h3>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 max-w-44">Avengers: Endgame </h3>
                 {direction == 'vertical' ? (
                     <p className="text-muted-foreground text-sm">2023 &middot; 23 tập</p>
                 ) : (

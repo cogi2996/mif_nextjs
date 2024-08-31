@@ -28,7 +28,7 @@ export default function Chat() {
 
             <div className="h-[600] bg-muted/20 p-4 border-r md:border-b md:col-span-1 overflow-y-auto">
                 <div className="flex items-center justify-between mb-4">
-                    <div className="font-medium text-base">Chats</div>
+                    <div className="font-base text-base">Chats</div>
                 </div>
                 <div className="hidden md:block relative mb-4">
                     <Input type="text" placeholder="Tìm kiếm..." className="pr-10 h-8" />
