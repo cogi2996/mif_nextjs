@@ -22,7 +22,7 @@ export default function CardReview() {
                             />
                             <p className="leading-none text-xs">7/10</p>
                         </div>
-                        <p className="text-xs text-muted-foreground line-clamp-4">The movie Blink Twice is the directorial debut from Zoë Kravitz. I would say that she has made a good debut movie, but it needs a couple of adjustments for it to be fantastic.
+                        <p className="text-xs text-muted-foreground line-clamp-4 text-justify">The movie Blink Twice is the directorial debut from Zoë Kravitz. I would say that she has made a good debut movie, but it needs a couple of adjustments for it to be fantastic.
 
                             From what is supposed to be a mystery thriller movie with some comedy, it does heavily fit into the mystery genre with its small clues throughout the movie that would tell you the real story. Before the third act where everything falls down. I wouldve liked for this movie to have gone down the story line quicker and given us a better final third act instead of using two whole acts with the same scenes over and over again... but with maybe a couple of clues.
 

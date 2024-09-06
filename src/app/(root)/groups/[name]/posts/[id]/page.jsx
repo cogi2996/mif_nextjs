@@ -141,7 +141,7 @@ export default function CommentSection() {
                         <p className='font-bold'>{comment.author} &middot;</p>
                         <p className='text-xs text-muted-foreground'>{comment.timestamp}</p>
                     </div>
-                    <div className="ml-10 text-base">{comment.content}</div>
+                    <p className="ml-10 text-sm">{comment.content}</p>
                     <div className="ml-4 flex items-center text-sm">
                         <Button variant="ghost rounded-full	" className="size-12">
                             <Play className='-rotate-90 ' strokeWidth={1.5} size={16} />

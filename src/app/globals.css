@@ -72,3 +72,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.ql-align-center {
+  display: flex;
+  justify-content: center;
+}
+
+.ql-align-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ql-size-small {
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 16px;
+}

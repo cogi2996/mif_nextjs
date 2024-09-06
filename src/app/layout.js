@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import ReduxProvider from "@/redux/redux-provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +15,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
+        <ReduxProvider>
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -21,7 +24,8 @@ export default function RootLayout({ children }) {
           >
             {children}
           </ThemeProvider>
-          </body>
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

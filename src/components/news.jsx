@@ -16,7 +16,7 @@ export default function News() {
           <p className='text-xs text-muted-foreground'>Ngày 1/1/2024</p>
         </div>
         <p className='text-lg font-bold'>At Least One Arrest Made in Matthew Perry Death Investigation</p>
-        <p className='text-sm md:text-lg lg:text-base w-full line-clamp-2'>
+        <p className='text-sm md:text-base lg:text-sm w-full line-clamp-2'>
           After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos actions and restore order to the universe.
           After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos actions and restore order to the universe.
         </p>

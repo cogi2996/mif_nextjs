@@ -17,7 +17,7 @@ function ContentWithReadMore({ content, hashtags, maxLength = 200 }) {
 
     return (
         <div>
-            <p className='text-sm md:text-base lg:text-base w-full inline'>
+            <p className='text-sm md:text-base lg:text-sm w-full inline'>
                 {isContentLong && !isExpanded ? content.slice(0, maxLength) + "..." : content}
             </p>
             {isContentLong && (
