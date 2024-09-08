@@ -18,4 +18,25 @@ export async function POST(request) {
   return NextResponse.json({
     myData
   })
-} 3
+}
+
+export async function PATCH(request) {
+  const res = await request.json();
+  const validData = schemaNewsRequest.safeParse(res);
+  
+  if (!validData.success) {
+    return NextResponse.json({
+      err: validData.error.flatten().fieldErrors,
+    });
+  }
+  
+  const myData = validData.data;
+
+  // Xử lý logic cập nhật dữ liệu của bạn tại đây
+  // Ví dụ: cập nhật thông tin trong cơ sở dữ liệu, v.v.
+
+  return NextResponse.json({
+    message: "Data updated successfully",
+    myData,
+  });
+}

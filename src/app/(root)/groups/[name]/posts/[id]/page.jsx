@@ -123,14 +123,24 @@ export default function CommentSection() {
         setReplyTo(null);
     };
     const renderComments = (comments, level = 1) => {
-        return comments.map((comment) => (
+        return comments.map((comment, index) =>
             <div key={comment.id} className={`${level == 1 ? '' : 'ml-8 relative'}`}>
                 {level > 1 && (
-                    <div className="absolute -top-16 -left-4 h-full border-l-2 border-muted"
+                    <div className="absolute 
+                    h-full border-l-2 border-s-card-foreground -top-16 -left-4"
                         style={{
                             height: 'calc(100% + 50px)',
                         }}
                     ></div>
+                )}
+                {level > 1 && (
+                    <div
+                        className={`absolute h-full border-t-2 w-4 -left-4 top-4 z-10 border-l-2 ${index === (comments.length - 1)  ? "border-s-card"  : "border-s-card-foreground"} border-t-card-foreground `}
+                        style={{
+                            height: 'calc(100% - 20px)',
+                        }}
+                    >
+                    </div>
                 )}
                 <div className='grid gap-1 '>
                     <div className='flex gap-2 items-center'>
@@ -171,8 +181,8 @@ export default function CommentSection() {
                 }
                 {comment.replies && renderComments(comment.replies, level + 1)}
             </div >
-        ));
-    };
+        )
+    }
     return (
         <div className="w-full max-w-3xl mx-auto shadow-xl mb-12 rounded-lg	bg-card">
             <Posts className="drop-shadow-none" />

@@ -11,7 +11,7 @@ export function cn(...inputs) {
 export const parseHtmlWithClasses = (domNode) => {
   if (domNode && domNode.name === 'h1') {
     return (
-      <h1 className="text-3xl">
+      <h1 {...domNode.attribs} className={`text-3xl ${domNode.attribs.class || ''}`}>
         {domToReact(domNode.children)}
       </h1>
     );
@@ -19,7 +19,7 @@ export const parseHtmlWithClasses = (domNode) => {
 
   if (domNode && domNode.name === 'h2') {
     return (
-      <h2 className="text-2xl">
+      <h2 {...domNode.attribs} className={`text-2xl ${domNode.attribs.class || ''}`}>
         {domToReact(domNode.children)}
       </h2>
     );
@@ -27,7 +27,7 @@ export const parseHtmlWithClasses = (domNode) => {
 
   if (domNode && domNode.name === 'h3') {
     return (
-      <h2 className="text-xl">
+      <h2 {...domNode.attribs} className={`text-xl ${domNode.attribs.class || ''}`}>
         {domToReact(domNode.children)}
       </h2>
     );

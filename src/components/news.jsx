@@ -28,7 +28,7 @@ export default function News() {
           width={1000}
           height={1000}
           alt="Image"
-          className="w-full rounded-b-lg aspect-[16/6] object-cover"
+          className="w-full rounded-b-lg aspect-[16/9] object-cover h-[200]"
         />
       </div>
     </div>

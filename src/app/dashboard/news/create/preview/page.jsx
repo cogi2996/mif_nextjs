@@ -21,7 +21,7 @@ export default function PreviewNews() {
     return (
 
         <div >
-            <div className='flex justify-between'>
+            <div className='flex justify-between mb-4'>
                 <Button onClick={handleBack}>Quay lại</Button>
                 <Button>Đăng</Button>
 

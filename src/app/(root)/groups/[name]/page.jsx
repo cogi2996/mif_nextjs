@@ -44,7 +44,7 @@ export default function Page({ params }) {
                             className="group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                             prefetch={false}
                         >
-                            <FilePen className="h-5 w-5" />
+                            <FilePen className="h-4 w-4" />
                             Bài viết
                         </Link>
                         <Link
@@ -52,7 +52,7 @@ export default function Page({ params }) {
                             className="group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                             prefetch={false}
                         >
-                            <Users className="h-5 w-5" />
+                            <Users className="h-4 w-4" />
                             Thành viên
                         </Link>
                         <Link
@@ -60,7 +60,7 @@ export default function Page({ params }) {
                             className="group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                             prefetch={false}
                         >
-                            <MessageCircle className="h-5 w-5" />
+                            <MessageCircle className="h-4 w-4" />
                             Nhắn tin
                         </Link>
                         <Link
@@ -68,7 +68,7 @@ export default function Page({ params }) {
                             className="group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                             prefetch={false}
                         >
-                            <Book className="h-5 w-5" />
+                            <Book className="h-4 w-4" />
                             Quy tắc
                         </Link>
                         <Link
@@ -76,7 +76,7 @@ export default function Page({ params }) {
                             className="group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                             prefetch={false}
                         >
-                            <Info className="h-5 w-5" />
+                            <Info className="h-4 w-4" />
                             Giới thiệu
                         </Link>
                     </div>

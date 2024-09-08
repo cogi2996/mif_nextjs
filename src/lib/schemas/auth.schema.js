@@ -1,8 +1,3 @@
-import { z } from 'zod'
-
-const categorySchema = z.object({
-    id: z.string()
-})
 export const schemaNewsRequest = z.object({
     title: z.string().min(6,"Toi thieu 5 ky tu"),
     tags: z.string().array().optional(),

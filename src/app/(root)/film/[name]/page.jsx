@@ -16,7 +16,7 @@ export default function Page() {
                     <p className="text-2xl md:text-3xl font-bold">The Shawshank Redemption</p>
                     <div className="flex justify-between">
                         <Rating
-                            ratingInPercent={70}
+                            ratingInPercent={63}
                             iconSize="l"
                             showOutOf={true}
                             enableUserInteraction={false}
