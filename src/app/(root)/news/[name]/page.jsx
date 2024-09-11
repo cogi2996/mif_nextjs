@@ -8,7 +8,6 @@ import parse from 'html-react-parser'
 import Link from 'next/link'
 import CardNew from '@/components/card-new'
 import Title from '@/components/title'
-import { useAppSelector } from '@/redux/store'
 
 export default function DetailNews() {
     const [content, setContent] = useState('');

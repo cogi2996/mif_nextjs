@@ -58,55 +58,50 @@
 //     );
 // }
 
-'use client'
-import React, { useState } from 'react';
-import MultipleSelector from '@/components/ui/multiple-selector';
+"use client"
 
-const OPTIONS = [
-    { label: 'nextjs', value: 'nextjs' },
-    { label: 'React', value: 'react' },
-    { label: 'Remix', value: 'remix' },
-    { label: 'Vite', value: 'vite' },
-    { label: 'Nuxt', value: 'nuxt' },
-    { label: 'Vue', value: 'vue' },
-    { label: 'Svelte', value: 'svelte' },
-    { label: 'Angular', value: 'angular' },
-    { label: 'Ember', value: 'ember', disable: true },
-    { label: 'Gatsby', value: 'gatsby', disable: true },
-    { label: 'Astro', value: 'astro' },
-];
+import { useState } from "react"
+import { PasswordInput } from "@/components/password-input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
 
-const MultipleSelectorCreatable = () => {
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-    const handleChange = (newOptions) => {
-        setSelectedOptions(newOptions);
-    };
+const SampleUseCase = () => {
+    const [currentPassword, setCurrentPassword] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
 
     return (
-        <div className="w-full px-10">
-            <MultipleSelector
-                defaultOptions={OPTIONS}
-                placeholder="Type something that does not exist in dropdowns..."
-                creatable
-                emptyIndicator={
-                    <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found.
-                    </p>
-                }
-                onChange={handleChange}
-                value={selectedOptions}
-            />
-            <div className="mt-4">
-                <h3>Selected Options:</h3>
-                <ul>
-                    {selectedOptions.map((option) => (
-                        <li key={option.value}>{option.label}</li>
-                    ))}
-                </ul>
+        <div className="space-y-4">
+            <div>
+                <Label htmlFor="current_password">Current Password</Label>
+                <PasswordInput
+                    id="current_password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    autoComplete="current-password"
+                />
             </div>
+            <div>
+                <Label htmlFor="password">New Password</Label>
+                <PasswordInput
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
+                />
+            </div>
+            <div>
+                <Label htmlFor="password_confirmation">Confirm Password</Label>
+                <PasswordInput
+                    id="password_confirmation"
+                    value={passwordConfirmation}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    autoComplete="new-password"
+                />
+            </div>
+            <Button type="submit">Save</Button>
         </div>
-    );
-};
+    )
+}
 
-export default MultipleSelectorCreatable;
+export default SampleUseCase

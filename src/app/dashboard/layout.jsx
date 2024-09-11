@@ -2,11 +2,16 @@ import Header from "@/components/header";
 import HeaderWithHomeIcon from "@/components/header-with-home-icon";
 import { House, LineChart, Newspaper, Package, Users } from "lucide-react";
 
-export default function RootLayout({
-    children,
-}) {
+export default function RootLayout({ children }) {
+    const authState = useAppSelector((state) => state.auth.authState);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (authState.isLogin)
+            router.push('/home')
+    }, [router, authState.isLogin])
     return (
-        <main>
+        <main >
             <HeaderWithHomeIcon />
             <main className="xl:px-36 lg:px-2 md:px-2 px-1 pt-24">
                 <div className='grid grid-cols-5 gap-4'>
@@ -54,6 +59,6 @@ export default function RootLayout({
                     </div>
                 </div>
             </main>
-        </main>
+        </main >
     );
 }

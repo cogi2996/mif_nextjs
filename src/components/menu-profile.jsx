@@ -16,8 +16,25 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/store";
+import { setAuthState } from "@/redux/slices/authSlice";
+import { toast } from "react-toastify";
 
 export function MenuProfile() {
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+    const handleLogout = () => {
+        console.log('Click logout')
+        const authState = {
+            isLogin: false,
+            accessToken: '',
+        }
+        dispatch(setAuthState(authState))
+        toast.success('Đăng xuất thành công')
+        router.push('/sign-in');
+    }
+
     return (
         <>
             <DropdownMenu modal={false}>
@@ -50,7 +67,7 @@ export function MenuProfile() {
                         <span>Hỗ trợ</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout}>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                     </DropdownMenuItem>

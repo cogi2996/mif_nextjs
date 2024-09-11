@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,18 +10,65 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schemaLogin } from '@/lib/schemas/auth.schema'
 import { toast } from 'react-toastify'
+import { useMutation } from '@tanstack/react-query'
+import { loginApi } from '@/services/authApi'
+import { setAuthState } from '@/redux/slices/authSlice'
+import { useAppDispatch } from '@/redux/store'
+import { useRouter } from 'next/navigation'
+import { PasswordInput } from '@/components/password-input'
 
 
 export default function SignIn() {
-    const { register, handleSubmit } = useForm({
+    const [rememberMe, setRememberMe] = useState(false);
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+    const { register, handleSubmit, setValue } = useForm({
         resolver: zodResolver(schemaLogin),
     })
 
+    const mutation = useMutation({
+        mutationFn: (data) => loginApi(data),
+        onSuccess: (data) => {
+            const authState = {
+                isLogin: true,
+                accessToken: data.access_token,
+            }
+            dispatch(setAuthState(authState))
+            toast.success('Đăng nhập thành công')
+            router.push('/home');
+        },
+        onError: (error) => {
+            toast.error('Email hoặc mật khẩu không đúng')
+        }
+    })
+
     const hanleLogin = (data) => {
-        console.log('🚀 ~ hanleLogin ~ data:', data)
-        toast.success('Đăng nhập thành công')
+        mutation.mutate(data);
+        if (rememberMe) {
+            localStorage.setItem('email', data.email);
+            localStorage.setItem('password', data.password);
+            localStorage.setItem('rememberMe', 'true')
+        } else {
+            localStorage.removeItem('email')
+            localStorage.removeItem('password')
+            localStorage.removeItem('rememberMe')
+        }
     }
-    
+
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('email')
+        const savedPassword = localStorage.getItem('password')
+        const savedRememberMe = localStorage.getItem('rememberMe') === 'true'
+
+        if (savedEmail) {
+            setValue('email', savedEmail)
+        }
+        if (savedPassword) {
+            setValue('password', savedPassword)
+        }
+        setRememberMe(savedRememberMe)
+    }, [setValue])
+
     return (
         <div className="flex items-center justify-center">
             <div className="mx-auto grid w-fit gap-6">
@@ -47,17 +94,20 @@ export default function SignIn() {
                             <div className="flex items-center">
                                 <Label htmlFor="password">Mật khẩu</Label>
                             </div>
-                            <Input
+                            <PasswordInput
                                 id="password"
-                                type="password"
                                 placeholder="Nhập mật khẩu"
                                 required
                                 {...register("password")}
                             />
                         </div>
                         <div className="flex gap-2">
-                            <Checkbox />
-                            <Label>Ghi nhớ tôi</Label>
+                            <Checkbox
+                                id="rememberMe"
+                                checked={rememberMe}
+                                onCheckedChange={setRememberMe}
+                            />
+                            <Label htmlFor="rememberMe">Ghi nhớ tôi</Label>
                             <ForgetPassword />
                         </div>
                         <Button type="submit" className="w-full">

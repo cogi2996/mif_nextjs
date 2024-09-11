@@ -1,12 +1,32 @@
+'use client'
 import Background from "@/app/(auth)/bg-film/background";
-import FilmStrip from "@/app/(root)/text/page";
-import Image from "next/image";
+import { useAppSelector } from "@/redux/store";
+import { Film } from "lucide-react";
+import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AuthLayout({ children }) {
+  const authState = useAppSelector((state) => state.auth.authState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState.isLogin)
+      router.push('/home')
+  }, [router, authState.isLogin])
   return (
     <main className="relative w-full lg:min-h-screen xl:min-h-screen bg-black h-screen">
+
+      <div className="absolute flex top-2 left-20 z-50 h-fit">
+        <Link href="/home" className="flex items-center gap-2">
+          <Film className="h-6 w-6" />
+          <span className="text-xl font-bold tracking-[.25em]">MIF</span>
+        </Link>
+      </div>
+
       {/* Background FilmStrip */}
-      <div className="absolute inset-0 z-0 h">
+      <div className="absolute inset-0 z-0 ">
         <Background />
       </div>
 

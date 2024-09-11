@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { newsReducer } from "@/redux/slices/newsSlice";
-import storage from "redux-persist/lib/storage";
 import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
+import { authReducer } from "@/redux/slices/authSlice";
+import storage from "@/redux/create-web-storage";
 
 
 const newsPersistConfig = {
@@ -12,8 +13,15 @@ const newsPersistConfig = {
     whitelist: ["newsState"],
 };
 
+const authPersistConfig = {
+    key: "auth",
+    storage,
+    whitelist: ["authState"],
+};
+
 const rootReducer = combineReducers({
     news: persistReducer(newsPersistConfig, newsReducer),
+    auth: persistReducer(authPersistConfig, authReducer),
 })
 
 export const store = configureStore({

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Film, Search, MessageCircle, AlignJustify } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -9,9 +9,27 @@ import BadgeIcon from "@/components/badge-icon"
 import { MenuProfile } from "@/components/menu-profile"
 import { NotificationPopover } from "@/components/popover-notification"
 import { ModeToggle } from "@/components/mode-toggle"
+import { useAppSelector } from "@/redux/store"
+import { usePathname } from "next/navigation"
+import "@/components/css/header.css"
 
 export default function Header() {
     const [open, setOpen] = useState(false)
+    const authState = useAppSelector((state) => state.auth.authState)
+
+    const currentPath = usePathname()
+    
+    const [activeIndex, setActiveIndex] = useState(0);
+    const linksRef = useRef([]);
+
+    useEffect(() => {
+        const paths = ['/home', '/film', '/news', '/groups', '#'];
+        const index = paths.indexOf(currentPath);
+        setActiveIndex(index !== -1 ? index : 0);
+    }, [currentPath]);
+
+    const linkClass = 'text-sm font-bold hover:text-primary transition-colors'
+    const activeLinkClass = 'text-sm font-bold text-primary transition-colors'
 
     return (
         <div className="fixed w-full z-10 drop-shadow-xl">
@@ -26,19 +44,19 @@ export default function Header() {
                         </SheetTrigger>
                         <SheetContent side="left" className="p-4 ">
                             <nav className="flex flex-col gap-4">
-                                <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                                <Link href="/home" className={currentPath === '/home' ? activeLinkClass : linkClass} prefetch={false}>
                                     Trang chủ
                                 </Link>
-                                <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                                <Link href="/film" className={currentPath === '/film' ? activeLinkClass : linkClass} prefetch={false}>
                                     Phim nổi bật
                                 </Link>
-                                <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                                <Link href="/news" className={currentPath === '/news' ? activeLinkClass : linkClass} prefetch={false}>
                                     Tin tức
                                 </Link>
-                                <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                                <Link href="/groups" className={currentPath === '/groups' ? activeLinkClass : linkClass} prefetch={false}>
                                     Nhóm
                                 </Link>
-                                <Link href="#" className="text-sm font-medium hover:text-primary transition-colors">
+                                <Link href="#" className={currentPath === '#' ? activeLinkClass : linkClass} prefetch={false}>
                                     Xem phim
                                 </Link>
                             </nav>
@@ -53,29 +71,66 @@ export default function Header() {
                 </Link>
 
                 {/* Navbar cho màn hình lớn */}
-                <nav className="hidden md:flex items-center gap-6">
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors" prefetch={false}>
-                        Trang chủ
-                    </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors" prefetch={false}>
-                        Phim nổi bật
-                    </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors" prefetch={false}>
-                        Tin tức
-                    </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors" prefetch={false}>
-                        Nhóm
-                    </Link>
-                    <Link href="#" className="text-sm font-medium hover:text-primary transition-colors" prefetch={false}>
-                        Xem phim
-                    </Link>
-                </nav>
+                <div className="hidden md:flex relative gap-2">
+                    <nav className="flex items-center gap-6 nav-links">
+                        <Link
+                            href="/home"
+                            className={activeIndex === 0 ? activeLinkClass : linkClass}
+                            prefetch={false}
+                            ref={el => linksRef.current[0] = el}
+                        >
+                            Trang chủ
+                        </Link>
+                        <Link
+                            href="/film"
+                            className={activeIndex === 1 ? activeLinkClass : linkClass}
+                            prefetch={false}
+                            ref={el => linksRef.current[1] = el}
+                        >
+                            Phim nổi bật
+                        </Link>
+                        <Link
+                            href="/news"
+                            className={activeIndex === 2 ? activeLinkClass : linkClass}
+                            prefetch={false}
+                            ref={el => linksRef.current[2] = el}
+                        >
+                            Tin tức
+                        </Link>
+                        <Link
+                            href="/groups"
+                            className={activeIndex === 3 ? activeLinkClass : linkClass}
+                            prefetch={false}
+                            ref={el => linksRef.current[3] = el}
+                        >
+                            Nhóm
+                        </Link>
+                        <Link
+                            href="#"
+                            className={activeIndex === 4 ? activeLinkClass : linkClass}
+                            prefetch={false}
+                            ref={el => linksRef.current[4] = el}
+                        >
+                            Xem phim
+                        </Link>
+                    </nav>
+                    <div
+                        className="absolute h-1 bg-red-600 rounded-lg -bottom-1 transition ease-in-out"
+                        style={{
+                            left: linksRef.current[activeIndex]?.offsetLeft,
+                            width: linksRef.current[activeIndex]?.offsetWidth,
+                            transition: 'left 0.3s ease, width 0.3s ease'
+                        }}
+                    />
+                </div>
 
                 {/* Icon và Avatar */}
                 {
-                    !true
+                    !authState.isLogin
                         ?
-                        <Button>Đăng nhập</Button>
+                        <Link href='/sign-in'>
+                            <Button>Đăng nhập</Button>
+                        </Link>
                         :
                         <div className="flex items-center gap-4">
                             <div className="hidden md:block relative">
@@ -88,7 +143,7 @@ export default function Header() {
                                 <MessageCircle />
                                 <span className="sr-only">Messages</span>
                             </Button>
-                            <ModeToggle/>
+                            <ModeToggle />
                             <MenuProfile />
                         </div>
                 }

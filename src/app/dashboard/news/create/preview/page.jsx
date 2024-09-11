@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { convertDeltaToHtml } from '@/lib/convert'
 
 export default function PreviewNews() {
-    const newsState = useAppSelector((state) => state.news.newsState);
+const newsState = useAppSelector((state) => state.news.newsState);
 
     const options = {
         replace: parseHtmlWithClasses,
