@@ -96,9 +96,9 @@ export default function DynamicImageGallery() {
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} className='h-fit w-[950px]'>
                 <DialogContent className='h-fit max-w-2xl'>
-                    <DialogHeader>{currentImageIndex+1}/{images.length}</DialogHeader>
+                    <DialogHeader>{currentImageIndex + 1}/{images.length}</DialogHeader>
                     <div className="flex items-center justify-between gap-4 ">
-                        <ChevronLeft className='cursor-pointer border-2 hover:text-primary' size={32} strokeWidth={1} onClick={handlePrev} />
+                        <ChevronLeft className='cursor-pointer border-2 hover:text-primary' size={32} strokeWidth={1} onClick={() => handlePrev()} />
                         <div className=" h-[550px] flex items-center justify-center">
                             <Image
                                 src={images[currentImageIndex].src}
@@ -109,7 +109,7 @@ export default function DynamicImageGallery() {
                                 className="rounded-md"
                             />
                         </div>
-                        <ChevronRight className='cursor-pointer border-2 hover:text-primary' size={32} strokeWidth={1} onClick={handleNext} />
+                        <ChevronRight className='cursor-pointer border-2 hover:text-primary' size={32} strokeWidth={1} onClick={() => handleNext()} />
                     </div>
                 </DialogContent>
             </Dialog>

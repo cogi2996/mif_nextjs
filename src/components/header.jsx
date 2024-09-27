@@ -10,31 +10,43 @@ import { MenuProfile } from "@/components/menu-profile"
 import { NotificationPopover } from "@/components/popover-notification"
 import { ModeToggle } from "@/components/mode-toggle"
 import { useAppSelector } from "@/redux/store"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import "@/components/css/header.css"
+import { useQuery } from "@tanstack/react-query"
+import { getUserInfoById } from "@/services/userApi"
 
 export default function Header() {
     const [open, setOpen] = useState(false)
+    const [search, setSearch] = useState('')
+    const router = useRouter()
     const authState = useAppSelector((state) => state.auth.authState)
 
     const currentPath = usePathname()
-    
-    const [activeIndex, setActiveIndex] = useState(0);
-    const linksRef = useRef([]);
 
-    useEffect(() => {
-        const paths = ['/home', '/film', '/news', '/groups', '#'];
-        const index = paths.indexOf(currentPath);
-        setActiveIndex(index !== -1 ? index : 0);
-    }, [currentPath]);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const linksRef = useRef([])
 
     const linkClass = 'text-sm font-bold hover:text-primary transition-colors'
     const activeLinkClass = 'text-sm font-bold text-primary transition-colors'
 
+    useEffect(() => {
+        const paths = ['/home', '/film', '/news', '/groups', '#'];
+        const matchPath = paths.find(path => currentPath.startsWith(path));
+        const index = paths.indexOf(matchPath);
+        setActiveIndex(index !== -1 ? index : -1);
+    }, [currentPath]);
+
+    const handleSearch = () => {
+        if (search.trim()) {
+            router.push(`/search?q=${search}`)
+            setSearch('')
+        }
+    }
+
     return (
-        <div className="fixed w-full z-10 drop-shadow-xl">
+        <div className="fixed w-full z-[15] drop-shadow-xl">
             <div className="flex items-center justify-between py-3 bg-background border-b xl:px-36 lg:px-2 md:px-2 px-1">
-                <div className="md:hidden flex items-center">
+                <div className="md:hidden flex items-center z-[200]">
                     <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -65,7 +77,7 @@ export default function Header() {
                 </div>
 
                 {/* Hiển thị logo trên màn hình lớn */}
-                <Link href="#" className="hidden md:flex items-center gap-2" prefetch={false}>
+                <Link href="/home" className="hidden md:flex items-center gap-2" prefetch={false}>
                     <Film />
                     <span className="text-xl font-bold gap-2 tracking-[.25em]">MIF</span>
                 </Link>
@@ -115,7 +127,7 @@ export default function Header() {
                         </Link>
                     </nav>
                     <div
-                        className="absolute h-1 bg-red-600 rounded-lg -bottom-1 transition ease-in-out"
+                        className="absolute h-1 bg-red-600 rounded-lg -bottom-2 transition ease-in-out"
                         style={{
                             left: linksRef.current[activeIndex]?.offsetLeft,
                             width: linksRef.current[activeIndex]?.offsetWidth,
@@ -134,17 +146,29 @@ export default function Header() {
                         :
                         <div className="flex items-center gap-4">
                             <div className="hidden md:block relative">
-                                <Input type="text" placeholder="Tìm kiếm..." className="pr-10" />
-                                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground " />
+                                <Input
+                                    type="text"
+                                    placeholder="Tìm kiếm..."
+                                    className="pr-10"
+                                    onChange={(e) => { setSearch(e.target.value) }}
+                                    value={search}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSearch();
+                                        }
+                                    }} />
+                                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:cursor-pointer" onClick={() => { handleSearch() }} />
                             </div>
                             <NotificationPopover />
-                            <Button variant="ghost" size="icon">
-                                {/* <BadgeIcon icon={MessageCircle} badgeContent={' '} /> */}
-                                <MessageCircle />
-                                <span className="sr-only">Messages</span>
-                            </Button>
+                            <Link href='/chat'>
+                                <Button variant="ghost" size="icon">
+                                    {/* <BadgeIcon icon={MessageCircle} badgeContent={' '} /> */}
+                                    <MessageCircle />
+                                    <span className="sr-only">Messages</span>
+                                </Button>
+                            </Link>
                             <ModeToggle />
-                            <MenuProfile />
+                            <MenuProfile id={authState.id} />
                         </div>
                 }
             </div>

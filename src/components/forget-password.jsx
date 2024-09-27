@@ -30,7 +30,7 @@ export function ForgetPassword() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
+            <Label htmlFor="displayName" className="text-right">
               Email
             </Label>
             <Input

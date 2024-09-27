@@ -16,6 +16,7 @@ import { setAuthState } from '@/redux/slices/authSlice'
 import { useAppDispatch } from '@/redux/store'
 import { useRouter } from 'next/navigation'
 import { PasswordInput } from '@/components/password-input'
+import { getUserIdFromToken } from '@/lib/helper'
 
 
 export default function SignIn() {
@@ -29,10 +30,14 @@ export default function SignIn() {
     const mutation = useMutation({
         mutationFn: (data) => loginApi(data),
         onSuccess: (data) => {
+            const id = getUserIdFromToken(data.access_token)
+
             const authState = {
                 isLogin: true,
                 accessToken: data.access_token,
+                id,
             }
+
             dispatch(setAuthState(authState))
             toast.success('Đăng nhập thành công')
             router.push('/home');

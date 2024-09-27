@@ -1,8 +1,9 @@
+import { Skeleton } from '@/components/ui/skeleton';
 import { Triangle } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-export default function CardActor({ ActorName, Rank }) {
+export default function CardActor({ actor }) {
     return (
         <div className='grid rounded-lg gap-4 w-40'>
             <Image
@@ -14,10 +15,10 @@ export default function CardActor({ ActorName, Rank }) {
             />
             <div className='pb-2'>
                 <p className='flex justify-center text-base font-bold'>
-                    {ActorName}
+                    {actor.name}
                 </p>
                 <div className='flex justify-center items-center gap-[2px]'>
-                    <span className='text-sm'>#{Rank}(</span>
+                    <span className='text-sm'>#{actor.rank}(</span>
                     {
                         true
                             ?
@@ -31,5 +32,17 @@ export default function CardActor({ ActorName, Rank }) {
             </div>
         </div>
     );
+}
+
+export const CardActorSkeleton = () => {
+    return (
+        <div className='grid rounded-lg gap-4 w-40'>
+            <Skeleton className="h-full w-full object-cover rounded-full aspect-square" />
+            <div className='grid pb-2 gap-2'>
+                <Skeleton className='flex justify-center h-4' />
+                <Skeleton className='flex justify-center h-4' />
+            </div>
+        </div>
+    )
 }
 

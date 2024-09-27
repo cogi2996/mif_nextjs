@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { convertDeltaToHtml } from '@/lib/convert'
 
 export default function PreviewNews() {
-const newsState = useAppSelector((state) => state.news.newsState);
+    const newsState = useAppSelector((state) => state.news.newsState);
 
     const options = {
         replace: parseHtmlWithClasses,
@@ -22,7 +22,7 @@ const newsState = useAppSelector((state) => state.news.newsState);
 
         <div >
             <div className='flex justify-between mb-4'>
-                <Button onClick={handleBack}>Quay lại</Button>
+                <Button onClick={() => handleBack()}>Quay lại</Button>
                 <Button>Đăng</Button>
 
             </div>

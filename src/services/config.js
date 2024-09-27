@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { store } from '@/redux/store.js'
 
-const BASE_URL = 'http://localhost:8080/api/v1/'
+const BASE_URL = 'http://localhost:8080/'
 
 const publicApi = axios.create({
     baseURL: BASE_URL,
@@ -20,7 +20,7 @@ publicApi.interceptors.request.use(
 );
 
 publicApi.interceptors.response.use(
-    response => response,
+    response => response.data,
     error => Promise.reject(error)
 );
 
@@ -41,9 +41,7 @@ privateApi.interceptors.request.use(
             const state = store.getState();
             const accessToken = state?.auth?.authState?.accessToken;
             if (accessToken) {
-                console.log('🚀 ~ accessToken:', accessToken)
-                config.headers.Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNTk5MTMyMiwiZXhwIjoxNzM0NjMxMzIyfQ.PX_yVqrn-bmTx4B8JwbTUfIRaI7fCpRTauj62BWF3NQ';
-                console.log('🚀 ~ config:', config)
+                config.headers.Authorization = 'Bearer ' + accessToken;
             }
             return config;
         } catch (error) {
@@ -55,11 +53,9 @@ privateApi.interceptors.request.use(
 );
 
 privateApi.interceptors.response.use(
-    response => response,
+    response => response.data,
     error => {
         const { response, config } = error;
-        console.log('🚀 ~ response:', response)
-        console.log('🚀 ~ error:', error)
         const status = response?.status;
 
         if (status === 401 || status === 403) {

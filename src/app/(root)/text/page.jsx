@@ -1,5 +1,7 @@
 // import Image from "next/image";
 // import "./style.css"
+'use client'
+import { FancyMultiSelect } from "@/components/fancy-multi-select";
 
 
 // const images = [
@@ -58,50 +60,58 @@
 //     );
 // }
 
-"use client"
+import React from "react";
 
-import { useState } from "react"
-import { PasswordInput } from "@/components/password-input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+const genres = [
+    { value: 'action', label: 'Action' },
+    { value: 'comedy', label: 'Comedy' },
+    { value: 'drama', label: 'Drama' },
+    { value: 'horror', label: 'Horror' },
+    { value: 'sci-fi', label: 'Sci-Fi' },
+    { value: 'romance', label: 'Romance' },
+];
 
-const SampleUseCase = () => {
-    const [currentPassword, setCurrentPassword] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordConfirmation, setPasswordConfirmation] = useState("")
+export default function MovieForm() {
+    const [selectedGenres, setSelectedGenres] = React.useState([]);
+
+    const handleSelectionChange = (selected) => {
+        setSelectedGenres(selected);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Sử dụng selectedGenres ở đây
+        console.log("Selected genres:", selectedGenres);
+    };
 
     return (
-        <div className="space-y-4">
-            <div>
-                <Label htmlFor="current_password">Current Password</Label>
-                <PasswordInput
-                    id="current_password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    autoComplete="current-password"
-                />
+        <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="flex justify-between">
+                <p className="text-2xl font-bold">Create Movie</p>
+                <button type="submit" className="btn-primary">Submit</button>
             </div>
-            <div>
-                <Label htmlFor="password">New Password</Label>
-                <PasswordInput
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="new-password"
-                />
-            </div>
-            <div>
-                <Label htmlFor="password_confirmation">Confirm Password</Label>
-                <PasswordInput
-                    id="password_confirmation"
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    autoComplete="new-password"
-                />
-            </div>
-            <Button type="submit">Save</Button>
-        </div>
-    )
-}
 
-export default SampleUseCase
+            {/* FancyMultiSelect */}
+            <div className="grid grid-cols-1 gap-4">
+                <div className="col-span-1">
+                    <p className="text-sm font-semibold pb-2">Genres</p>
+                    <FancyMultiSelect
+                        values={genres}
+                        initialSelected={[]}
+                        onSelectionChange={handleSelectionChange}
+                    />
+                </div>
+            </div>
+
+            {/* Bạn có thể render các thể loại đã chọn bên dưới */}
+            <div>
+                <p className="text-sm font-semibold">Selected Genres:</p>
+                <ul>
+                    {selectedGenres.map((genre) => (
+                        <li key={genre.value}>{genre.label}</li>
+                    ))}
+                </ul>
+            </div>
+        </form>
+    );
+}

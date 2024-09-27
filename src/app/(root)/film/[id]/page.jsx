@@ -1,19 +1,49 @@
+'use client'
 import CardActorHorizontal from "@/components/card-actor-horizontal"
 import CardFilm from "@/components/card-film"
 import CardReview from "@/components/card-review"
+import DialogRating from "@/components/dialog-rating"
 import DynamicImageGallery from "@/components/dynamic-image-gallery"
 import Rating from "@/components/rating"
 import Title from "@/components/title"
 import { Button } from "@/components/ui/button"
-import { Heart, Star, Triangle } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { getMovieById } from "@/services/movieApi"
+import { getAllmovieCategories } from "@/services/movieCategoriesApi"
+import { useQuery } from "@tanstack/react-query"
+import { Copy, Heart, Star, Triangle } from "lucide-react"
 import Image from "next/image"
+import { useParams } from "next/navigation"
 
-export default function Page() {
+
+export default function DetailMovie() {
+    const { id } = useParams();
+
+    const { isLoading: isLoadingMovie, data: movie } = useQuery({
+        queryKey: ['detail_movie', id],
+        queryFn: ({ queryKey }) => getMovieById(queryKey[1])
+    })
+
+    const { data: movieCategories } = useQuery({
+        queryKey: 'all_movie_categories',
+        queryFn: getAllmovieCategories,
+    });
+
+    console.log('🚀 ~ DetailMovie ~ movie:', movie)
+    console.log('🚀 ~ DetailMovie ~ movieCategories:', movieCategories)
+    const categoriesName = movie?.genre?.map((element) => {
+        return movieCategories?.find((category) => element?.id === category?.id)
+    })
+    console.log('🚀 ~ categoriesName ~ categoriesName:', categoriesName)
+
+    if (isLoadingMovie) return (<div>Loading...</div>)
     return (
         <div className="w-full md:py-12">
             <div className="grid gap-4">
                 <div className="">
-                    <p className="text-2xl md:text-3xl font-bold">The Shawshank Redemption</p>
+                    <p className="text-2xl md:text-3xl font-bold">{movie.title}</p>
                     <div className="flex justify-between">
                         <Rating
                             ratingInPercent={63}
@@ -22,7 +52,7 @@ export default function Page() {
                             enableUserInteraction={false}
                         />
                         <div className="flex items-center gap-4">
-                            <Button size="lg">Rate</Button>
+                            <DialogRating />
                             <Button size="lg" variant="outline">
                                 <Heart className="w-5 h-5 mr-2" />
                                 Add to Watchlist
@@ -56,21 +86,22 @@ export default function Page() {
                                 <div className="bg-muted rounded-lg p-6">
                                     <h2 className="text-xl font-bold mb-4">Về phim</h2>
                                     <p className="text-sm leading-relaxed">
-                                        Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of
-                                        common decency.
+                                        {movie.description}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="text-muted-foreground">Năm phát hành:</div>
-                                    <div>1994</div>
+                                    <div>{movie.releaseDate?.split('-')[0]}</div>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="text-muted-foreground">Thời lượng:</div>
-                                    <div>142 min</div>
+                                    <div>{movie.duration} min</div>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="text-muted-foreground">Thể loại:</div>
-                                    <div>Drama, Crime</div>
+                                    <div>{categoriesName?.map((category) => {
+                                        return category?.categoryName
+                                    }).join(', ')}</div>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="text-muted-foreground">Điểm đánh giá:</div>
@@ -126,7 +157,29 @@ export default function Page() {
                                 <Heart className="w-5 h-5 mr-2" />
                                 Add to Watchlist
                             </Button>
-                            <Button size="lg">Share</Button>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button size="lg">Share</Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-full">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="grid flex-1 gap-2">
+                                            <Label htmlFor="link" className="sr-only">
+                                                Link
+                                            </Label>
+                                            <Input
+                                                id="link"
+                                                defaultValue={window.location.href}
+                                                readOnly
+                                            />
+                                        </div>
+                                        <Button type="submit" size="sm" className="px-3" variant="secondary">
+                                            <span className="sr-only">Copy</span>
+                                            <Copy className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
                         </div>
                     </div>
                 </div>

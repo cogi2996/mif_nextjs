@@ -6,7 +6,7 @@ export const schemaLogin = z.object({
 })
 
 export const schemaRegister = z.object({
-    userName: z.string(),
+    displayName: z.string(),
     email: z.string().email(),
     password: z.string(),
 })  

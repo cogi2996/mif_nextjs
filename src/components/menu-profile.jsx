@@ -20,12 +20,14 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/store";
 import { setAuthState } from "@/redux/slices/authSlice";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import { getUserInfoById } from "@/services/authApi";
+import Link from "next/link";
 
-export function MenuProfile() {
+export function MenuProfile({ id }) {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const handleLogout = () => {
-        console.log('Click logout')
         const authState = {
             isLogin: false,
             accessToken: '',
@@ -35,13 +37,18 @@ export function MenuProfile() {
         router.push('/sign-in');
     }
 
+    const { data, error, isLoading } = useQuery({
+        queryKey: ['info_user', id],
+        queryFn: ({ queryKey }) => getUserInfoById(queryKey[1]),
+    });
+
     return (
         <>
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     <Avatar className="w-8 h-8 flex items-center justify-center object-contain">
-                        <AvatarImage src="https://plus.unsplash.com/premium_photo-1664536392779-049ba8fde933?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="@shadcn" />
-                        <AvatarFallback className="flex items-center justify-center">T</AvatarFallback>
+                        <AvatarImage src={data?.profilePictureUrl} alt="@shadcn" />
+                        <AvatarFallback className="flex items-center justify-center uppercase">{data?.displayName && data?.displayName[0]}</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 overflow-hidden">
@@ -49,8 +56,13 @@ export function MenuProfile() {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem>
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Trang cá nhân</span>
+                            <Link
+                                href={`/user/${id}`}
+                                className="w-full h-full flex"
+                            >
+                                <User className="mr-2 h-4 w-4" />
+                                <span>Trang cá nhân</span>
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <CreditCard className="mr-2 h-4 w-4" />
@@ -67,7 +79,7 @@ export function MenuProfile() {
                         <span>Hỗ trợ</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>
+                    <DropdownMenuItem onClick={() => handleLogout()}>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                     </DropdownMenuItem>

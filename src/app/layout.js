@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import ReduxProvider from "@/redux/redux-provider";
 import ReactQueryProvider from "@/lib/reactQueryClient";
 import CustomToastContainer from "@/lib/customToastContainer";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +26,9 @@ export default function RootLayout({ children }) {
               disableTransitionOnChange
             >
               {children}
-              <CustomToastContainer/>
+              <CustomToastContainer />
             </ThemeProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
           </ReactQueryProvider>
         </ReduxProvider>
       </body>

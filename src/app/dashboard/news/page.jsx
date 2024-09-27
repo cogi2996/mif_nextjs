@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Calendar, ChevronLeft, ChevronRight, Eye, FilePen, Filter, House, LineChart, ListOrdered, Newspaper, Package, Tag, Trash, User, Users } from 'lucide-react'
+import { Calendar, ChevronLeft, ChevronRight, Clock, Ellipsis, Eye, FilePen, Filter, House, LineChart, ListOrdered, Newspaper, Package, Star, Tag, Trash, TrendingUp, User, Users } from 'lucide-react'
 import React from 'react'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import Link from "next/link"
-import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 
 
 export default function page() {
@@ -78,18 +78,29 @@ export default function page() {
                             <TableCell>John Doe</TableCell>
                             <TableCell>2023-04-15</TableCell>
                             <TableCell className="flex items-center gap-2">
-                                <Button variant="ghost" size="icon">
-                                    <FilePen className="w-5 h-5" />
-                                    <span className="sr-only">Edit</span>
-                                </Button>
-                                <Button variant="ghost" size="icon">
-                                    <Eye className="w-5 h-5" />
-                                    <span className="sr-only">View</span>
-                                </Button>
-                                <Button variant="ghost" size="icon">
-                                    <Trash className="w-5 h-5" />
-                                    <span className="sr-only">Delete</span>
-                                </Button>
+                                <DropdownMenu modal={false}>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size='icon'>
+                                            <Ellipsis className="w-5 h-5" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="start">
+                                        <DropdownMenuLabel>Action</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <FilePen className="w-4 h-4 mr-2" />
+                                            Sửa
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Eye className="w-4 h-4 mr-2" />
+                                            Xem
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Trash className="w-4 h-4 mr-2" />
+                                            Xóa
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -101,35 +112,54 @@ export default function page() {
                             <TableCell>Jane Smith</TableCell>
                             <TableCell>2023-05-01</TableCell>
                             <TableCell className="flex items-center gap-2">
-                                <Button variant="ghost" size="icon">
-                                    <FilePen className="w-5 h-5" />
-                                    <span className="sr-only">Edit</span>
-                                </Button>
-                                <Button variant="ghost" size="icon">
-                                    <Eye className="w-5 h-5" />
-                                    <span className="sr-only">View</span>
-                                </Button>
-                                <Button variant="ghost" size="icon">
-                                    <Trash className="w-5 h-5" />
-                                    <span className="sr-only">Delete</span>
-                                </Button>
+                                <DropdownMenu modal={false}>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size='icon'>
+                                            <Ellipsis className="w-5 h-5" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="start">
+                                        <DropdownMenuLabel>Action</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <FilePen className="w-4 h-4 mr-2" />
+                                            Sửa
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Eye className="w-4 h-4 mr-2" />
+                                            Xem
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Trash className="w-4 h-4 mr-2" />
+                                            Xóa
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
-                <Pagination className="mt-6">
+                <Pagination>
                     <PaginationContent>
                         <PaginationItem>
-                            <Button variant="outline" size="icon">
-                                <ChevronLeft className="w-5 h-5" />
-                                <span className="sr-only">Previous</span>
-                            </Button>
+                            <PaginationPrevious href="#" />
                         </PaginationItem>
                         <PaginationItem>
-                            <Button variant="outline" size="icon">
-                                <ChevronRight className="w-5 h-5" />
-                                <span className="sr-only">Next</span>
-                            </Button>
+                            <PaginationLink href="#">1</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#" isActive>
+                                2
+                            </PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">3</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href="#" />
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>

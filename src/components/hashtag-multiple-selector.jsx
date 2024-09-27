@@ -16,7 +16,7 @@ const OPTIONS = [
     { label: 'Astro', value: 'astro' },
 ];
 
-export default function HashtagMultipleSelector({ setValue, value}) {
+export default function HashtagMultipleSelector({ setValue, value }) {
     const handleChange = (newOptions) => {
         setValue(newOptions)
 
@@ -29,7 +29,7 @@ export default function HashtagMultipleSelector({ setValue, value}) {
                 creatable
                 emptyIndicator={
                     <p className="text-center text-lg ">
-                        no results found.
+                        No results found.
                     </p>
                 }
                 onChange={handleChange}

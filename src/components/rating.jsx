@@ -57,7 +57,11 @@ const SIZES = {
     LARGE: {
         key: "l",
         size: 28
-    }
+    },
+    SUPERLARGE: {
+        key: "xl",
+        size: 40
+    },
 };
 
 const OUT_OF_VALUE = 5;
@@ -83,7 +87,8 @@ const Rating = (props) => {
             ? SIZES.SMALL.size
             : iconSize === SIZES.MEDIUM.key
                 ? SIZES.MEDIUM.size
-                : SIZES.LARGE.size;
+                : iconSize === SIZES.LARGE.key
+                    ? SIZES.LARGE.size : SIZES.SUPERLARGE.size;
 
     const RatingHighlighted = (
         <IconComponent type={"ratingHighlighted"} width={size} height={size} />

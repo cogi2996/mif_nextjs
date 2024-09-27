@@ -35,7 +35,7 @@ export default function CreateNews() {
     }
 
     const onSubmit = (data) => {
-        const hashTags = selectedHashTag?.map((item)=> item?.value)
+        const hashTags = selectedHashTag?.map((item) => item?.value)
         const finalData = {
             ...data,
             content,
@@ -49,29 +49,29 @@ export default function CreateNews() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className='grid gap-4'>
                 <div className='flex justify-between'>
-                    <p className='text-2xl'>Tạo tin tức</p>
+                    <p className='text-2xl font-bold'>Tạo tin tức</p>
                     <div className='flex gap-2'>
-                        <Button onClick={hanlePreview} type="button">Xem trước</Button>
+                        <Button onClick={() => hanlePreview()} type="button">Xem trước</Button>
                         <Button type='Submit'>Đăng</Button>
                     </div>
                 </div>
                 <div>
-                    <p className='text-base pb-2'>Nhập tiêu đề:</p>
+                    <p className='text-sm pb-2 font-semibold'>Nhập tiêu đề:</p>
                     <Input
                         {...register('title')}
                     />
                 </div>
                 <div>
-                    <p className='text-base pb-2'>Hashtag:</p>
+                    <p className='text-sm pb-2 font-semibold'>Hashtag:</p>
                     <HashtagMultipleSelector setValue={setSelectedHashTag} value={selectedHashTag} />
                 </div>
                 <div>
-                    <p className='text-base pb-2'>Thumbnail:</p>
+                    <p className='text-sm pb-2 font-semibold'>Thumbnail:</p>
                     <Input type='file'
                     />
                 </div>
                 <div className='mb-8'>
-                    <p className='text-base pb-2'>Nội dung:</p>
+                    <p className='text-sm pb-2 font-semibold'>Nội dung:</p>
                     <TextEditor setValue={setContent} value={content} />
                 </div>
             </div>

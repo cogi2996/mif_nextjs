@@ -152,7 +152,7 @@ export default function Chat() {
                         </div>
                     </div>
                     <div className="flex items-center gap-1 ml-auto">
-                        <Button variant="ghost" size="icon" onClick={toggleNotifications}>
+                        <Button variant="ghost" size="icon" onClick={() => toggleNotifications()}>
                             <span className="sr-only">Settings</span>
                             <Settings className="h-4 w-4" />
                         </Button>

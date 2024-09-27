@@ -3,11 +3,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import Posts from "@/components/posts";
+import Post, { PostSkeleton } from "@/components/post";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, Play } from "lucide-react";
+import { Ellipsis, MessageCircle, Play, Send } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
+import Comment from "@/components/comment";
 
-export default function CommentSection() {
+export default function DetailPost() {
+    const { postId } = useParams();
+
     const [comments, setComments] = useState([
         {
             id: 1,
@@ -19,7 +24,7 @@ export default function CommentSection() {
                 {
                     id: 2,
                     author: "Nerdy_Chick_6868",
-                    content: "Comment 2",
+                    content: "Comment 4 comment này dài ơi là dài khiến bạn phải thấy nó dài, vẫn chưa đủ dài nó vẫn quá ngắn, Comment 4 comment này dài ơi là dài khiến bạn phải thấy nó dài, vẫn chưa đủ dài nó vẫn quá ngắn,Comment 4 comment này dài ơi là dài khiến bạn phải thấy nó dài, vẫn chưa đủ dài nó vẫn quá ngắn",
                     timestamp: "8h ago",
                     upvotes: 1,
                     replies: [
@@ -123,71 +128,60 @@ export default function CommentSection() {
         setReplyTo(null);
     };
     const renderComments = (comments, level = 1) => {
-        return comments.map((comment, index) =>
-            <div key={comment.id} className={`${level == 1 ? '' : 'ml-8 relative'}`}>
-                {level > 1 && (
-                    <div className="absolute 
-                    h-full border-l-2 border-s-card-foreground -top-16 -left-4"
+        return comments.map((comment, index) => (
+            <div key={comment.id} className={`${level === 1 ? 'relative' : 'ml-8 relative'}`}>
+                {/* Straight line from parent element to first child element */}
+                {comment?.replies?.length && (
+                    <div
+                        className={`absolute h-full border-l-2 border-s-muted left-4 top-12`}
                         style={{
-                            height: 'calc(100% + 50px)',
+                            height: 'calc(100% - 50px)',
                         }}
                     ></div>
                 )}
                 {level > 1 && (
                     <div
-                        className={`absolute h-full border-t-2 w-4 -left-4 top-4 z-10 border-l-2 ${index === (comments.length - 1)  ? "border-s-card"  : "border-s-card-foreground"} border-t-card-foreground `}
+                        className={`absolute h-full border-t-2 w-4 -left-4 top-4 z-10 border-l-2 border-t-muted 
+                            ${index === (comments.length - 1) ? "border-s-card" : "border-s-muted"}`} // Extend the line to the last element of the parent element
                         style={{
                             height: 'calc(100% - 20px)',
                         }}
-                    >
+                    ></div>
+                )}
+                <Comment comment={comment} setReplyTo={setReplyTo} replyTo={replyTo} />
+                {replyTo === comment.id && (
+                    <div className="my-2 ml-8 flex items-start gap-4 z-10">
+                        <Input
+                            placeholder="Nhập bình luận..."
+                            className="h-auto resize-none overflow-hidden"
+                        />
+                        <Button size="icon" onClick={() => handleReply(comment.id, replyContent, level)}>
+                            <Send className='w-4 h-4' />
+                            <span className="sr-only">Send</span>
+                        </Button>
                     </div>
                 )}
-                <div className='grid gap-1 '>
-                    <div className='flex gap-2 items-center'>
-                        <Avatar className="w-8 h-8 flex items-center justify-center object-contain">
-                            <AvatarImage src="https://plus.unsplash.com/premium_photo-1664536392779-049ba8fde933?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="@shadcn" />
-                            <AvatarFallback className="flex items-center justify-center">T</AvatarFallback>
-                        </Avatar>
-                        <p className='font-bold'>{comment.author} &middot;</p>
-                        <p className='text-xs text-muted-foreground'>{comment.timestamp}</p>
-                    </div>
-                    <p className="ml-10 text-sm">{comment.content}</p>
-                    <div className="ml-4 flex items-center text-sm">
-                        <Button variant="ghost rounded-full	" className="size-12">
-                            <Play className='-rotate-90 ' strokeWidth={1.5} size={16} />
-                        </Button>
-                        200
-                        <Button variant="ghost rounded-full">
-                            <Play className='rotate-90 text-indigo-600 fill-indigo-600' strokeWidth={1.5} size={16} />
-                        </Button>
-                        <Button variant="ghost" className="gap-1 items-center rounded-full text-sm" onClick={() => setReplyTo(comment.id)}>
-                            <MessageCircle size={16} />
-                            Phản hồi
-                        </Button>
-                    </div>
-                </div>
-                {
-                    replyTo === comment.id && (
-                        <div className="my-2 ml-8 flex items-start gap-4 z-10">
-                            <Input
-                                value={replyContent}
-                                onChange={(e) => setReplyContent(e.target.value)}
-                                placeholder="Write your reply..."
-                                className="flex-1"
-                            />
-                            <Button onClick={() => handleReply(comment.id, replyContent, level)}>Reply</Button>
-                        </div>
-                    )
-                }
                 {comment.replies && renderComments(comment.replies, level + 1)}
-            </div >
-        )
-    }
+            </div>
+        ));
+    };
     return (
         <div className="w-full max-w-3xl mx-auto shadow-xl mb-12 rounded-lg	bg-card">
-            <Posts className="drop-shadow-none" />
-            <Input className='mt-4' />
-            <div className="space-y-1 mx-2 bg-inherit mt-4">{renderComments(comments)}</div>
+            <PostSkeleton className="drop-shadow-none" />
+            <div className="flex items-center gap-2 px-2 mt-4">
+                <Textarea
+                    placeholder="Nhập bình luận..."
+                    rows={1}
+                    className="h-auto resize-none overflow-hidden"
+                />
+                <Button size="icon">
+                    <Send className='w-4 h-4' />
+                    <span className="sr-only">Send</span>
+                </Button>
+            </div>
+            <div>
+                <div className="space-y-1 mx-2 bg-inherit mt-4">{renderComments(comments)}</div>
+            </div>
         </div>
     );
 }
