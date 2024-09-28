@@ -1,41 +1,80 @@
-```md
-# Next.js Project
+# MIF Nextjs
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 1. Introduction
 
-## 🚀 Getting Started
+This is a web application built with [Next.js](https://nextjs.org/), a React framework that supports server-side rendering and static site generation.
 
-To start the development server, use one of the following commands:
+**Movie Insight Forum (MIF)**  is a forum for film enthusiasts. The application allowing users to join groups, post articles, engage with film content, and message within groups. It provides detailed information about movies and actors, along with features for rating and saving films, as well as favoriting artists.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1.1. Technology used:
 
-Then, open [http://localhost:3000](http://localhost:3000) in your browser to see your application in action.
+- **Next.js**: Supports server-side rendering (SSR) and static site generation (SSG).
+- **React Hook Form**: Efficient form handling with React.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **Axios**: For making HTTP requests with custom instances.
+- **React Query**: Server-side state management, caching, and API interactions.
+- **Zod**: Schema validation for forms and data.
+- **QuillJS**: Rich text editor for managing formatted content.
+- **Redux**: A predictable state container for managing application-level state.
+- **Shadcn UI**: A component library for building modern UI with Next.js and Tailwind CSS.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you make changes.
+## 2. Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 2.1. System Requirements
 
-## 📚 Learn More
+- Node.js >= 16.x
+- NPM >= 7.x or Yarn >= 1.x
 
-To learn more about Next.js, check out these resources:
+### 2.2. Steps to Install
 
-- [Next.js Documentation](https://nextjs.org/docs) - Comprehensive guides and API references.
-- [Learn Next.js](https://nextjs.org/learn) - Interactive Next.js tutorial.
+**2.2.1. Install dependencies:** 
 
-You can also explore the [Next.js GitHub repository](https://github.com/vercel/next.js/) where your feedback and contributions are welcome!
+    Using npm:
 
-## 📦 Deploy on Vercel
+    ```bash
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is via the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) created by the team behind Next.js.
+    Or using Yarn:
 
-For more details on deployment, refer to the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
-```
+    ```bash
+    yarn install
+    ```
+**2.2.2. Run the application:**
 
+    To run the app in development mode:
+
+    ```bash
+    npm run dev
+    ```
+
+    Or using Yarn:
+
+    ```bash
+    yarn dev
+    ```
+
+    The application will be available at `http://localhost:3000`.
+
+**2.2.3. Build for production:**
+
+    If you want to build the application for production:
+
+    ```bash
+    npm run build
+    npm run start
+    ```
+
+    Or using Yarn:
+
+    ```bash
+    yarn build
+    yarn start
+    ```
+
+## Usage
+
+- Visit `http://localhost:3000/home` to access the application.
+
+## API Reference
+The frontend utilizes data from the backend API, which can be found in the API documentation [Here](https://github.com/cogi2996/mif_api)
