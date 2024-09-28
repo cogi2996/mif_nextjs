@@ -1,0 +1,35 @@
+.film-strip {
+    width: auto;
+    height: 200px;
+    background-color: black;
+    padding: 4px;
+}
+
+.strip-row {
+    display: flex;
+    justify-content: space-between;
+    height: 12px;
+    gap: 4px;
+    padding: 0px 4px;
+    align-items: center;
+}
+
+.strip-square {
+    width: 12px;
+    height: 100%;
+    background-color: white;
+}
+
+.strip-main {
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 40px);
+    margin: 4px 0;
+    background-color: black;
+}
+
+.strip-frame {
+    width: 98%;
+    height: 100%;
+    background-color: white;
+}
