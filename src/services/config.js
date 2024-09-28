@@ -2,6 +2,7 @@ import axios from 'axios'
 import { store } from '@/redux/store.js'
 
 const BASE_URL = 'http://localhost:8080/'
+export const dynamic = 'force-dynamic'
 
 const publicApi = axios.create({
     baseURL: BASE_URL,

@@ -23,7 +23,7 @@ export default function ActorCarousel() {
                 className="w-full h-auto "
             >
                 <CarouselContent>
-                    {Array.from({ length: 4 }, (_, index) => (
+                    {Array.from({ length: 5 }, (_, index) => (
                         <CarouselItem
                             key={index}
                             className="flex md:basis-1/2 lg:basis-1/4 justify-center my-8"
@@ -45,7 +45,7 @@ export default function ActorCarousel() {
                 {data?.content?.map((actor) => (
                     <CarouselItem
                         key={actor?.id}
-                        className="flex md:basis-1/2 lg:basis-1/4 justify-center my-8"
+                        className="flex md:basis-1/2 lg:basis-1/5 justify-center my-8"
                         onClick={() => handleDetailActor(actor?.id)}
                     >
                         <div>

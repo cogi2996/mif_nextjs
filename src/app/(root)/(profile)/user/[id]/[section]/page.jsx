@@ -4,11 +4,10 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 
 export default function UserSection() {
-    const { section } = useParams()
-    console.log('🚀 ~ UserSection ~ section:', section)
+    const { id, section } = useParams()
     return (
         <div>
-            {(section === 'info') && <InfoSection />}
+            {(section === 'info') && <InfoSection id={id} />}
         </div>
     )
 }

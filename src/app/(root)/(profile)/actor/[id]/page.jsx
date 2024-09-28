@@ -8,10 +8,11 @@ import { Button } from '@/components/ui/button'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { getActorById, getActorFilmography } from '@/services/actorApi'
-import { isActorFavorite } from '@/services/favoriteActorsApi'
-import { useQuery } from '@tanstack/react-query'
+import { addFavoriteActor, isActorFavorite, removeFavoriteActor } from '@/services/favoriteActorsApi'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Award, Camera, ChevronDown, CircleDollarSign, Handshake, Heart, HeartOff, LogOut, Triangle } from 'lucide-react'
 import React, { act, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function Actor({ params }) {
   const [liked, setLiked] = useState(false);
@@ -26,18 +27,47 @@ export default function Actor({ params }) {
     queryFn: ({ queryKey }) => getActorFilmography(queryKey[1]),
   })
 
-  console.log('🚀 ~ Actor ~ actorFilmography:', actorFilmography)
-
   const { data: isliked, isLoading } = useQuery({
     queryKey: ['isActorFavorite', params.id],
     queryFn: ({ queryKey }) => isActorFavorite(queryKey[1]),
   });
 
-  useEffect(() => {
-    if (isliked !== undefined) {
-      setLiked(isliked);
+  const addFavoriteActorMutation = useMutation({
+    mutationFn: addFavoriteActor,
+    onSuccess: () => {
+      setLiked(true)
+      toast.success('Yêu thích')
+    },
+    onError: () => {
+      toast.error('Có lỗi')
     }
-  }, [isliked]);
+  })
+
+  const removeFavoriteActorMutation = useMutation({
+    mutationFn: removeFavoriteActor,
+    onSuccess: () => {
+      setLiked(false)
+      toast.success('Hủy yêu thích')
+    },
+    onError: () => {
+      toast.error('Có lỗi')
+    }
+  })
+
+  const handleAddFavoriteActor = () => {
+    addFavoriteActorMutation.mutate(params.id)
+  }
+
+  const handleRemoveFavoriteActor = () => {
+    setLiked(false)
+    removeFavoriteActorMutation.mutate(params.id)
+  }
+
+  // useEffect(() => {
+  //   if (isliked !== undefined) {
+  //     setLiked(isliked);
+  //   }
+  // }, [isliked]);
 
   return (
     <div className=" max-w-4xl mx-auto">
@@ -69,11 +99,11 @@ export default function Actor({ params }) {
         {
           liked
             ?
-            <Button >
+            <Button onClick={() => { handleAddFavoriteActor() }}>
               Yêu thích
             </Button>
             :
-            <DropdownMenu modal={false}>
+            <DropdownMenu modal={false} >
               <DropdownMenuTrigger asChild>
                 <Button variant="secondary" className="gap-1">
                   <span className="sr-only sm:not-sr-only font-bold">Đã yêu thích</span>
@@ -81,7 +111,7 @@ export default function Actor({ params }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { handleRemoveFavoriteActor() }}>
                   <HeartOff className="h-4 w-4 mr-2 font-bold" />
                   Hủy yêu thích
                 </DropdownMenuItem>

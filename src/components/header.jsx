@@ -13,7 +13,6 @@ import { useAppSelector } from "@/redux/store"
 import { usePathname, useRouter } from "next/navigation"
 import "@/components/css/header.css"
 import { useQuery } from "@tanstack/react-query"
-import { getUserInfoById } from "@/services/userApi"
 
 export default function Header() {
     const [open, setOpen] = useState(false)

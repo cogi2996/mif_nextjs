@@ -70,7 +70,6 @@ const menuConfig = [
 
 export default function RootLayout({ children }) {
     const authState = useAppSelector((state) => state.auth.authState);
-    const [currentPath, setCurrentPath] = useState('');
     const router = useRouter();
     const pathname = usePathname()
     useEffect(() => {

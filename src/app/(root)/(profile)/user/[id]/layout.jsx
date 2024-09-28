@@ -6,10 +6,49 @@ import { getUserInfoById } from '@/services/userApi'
 import { useQuery } from '@tanstack/react-query'
 import { Camera, CircleDollarSign } from 'lucide-react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import React from 'react'
 
+const menuConfig = [
+    {
+        title: 'Bài viết của tôi',
+        href: (id) => `/user/${id}`,
+        active: function (pathname, id) {
+            return pathname === this.href(id)
+        }
+    },
+    {
+        title: 'Thông tin',
+        href: (id) => `/user/${id}/info`,
+        active: function (pathname, id) {
+            return pathname === this.href(id)
+        }
+    },
+    {
+        title: 'Bài viết đã lưu',
+        href: (id) => `/user/${id}/saved_posts`,
+        active: function (pathname, id) {
+            return pathname === this.href(id)
+        }
+    },
+    {
+        title: 'Phim đã lưu',
+        href: (id) => `/user/${id}/saved_movies`,
+        active: function (pathname, id) {
+            return pathname === this.href(id)
+        }
+    },
+    {
+        title: 'Nghệ sĩ yêu thích',
+        href: (id) => `/user/${id}/favorite_artist`,
+        active: function (pathname, id) {
+            return pathname === this.href(id)
+        }
+    },
+]
+
 export default function RootLayout({ children }) {
+    const pathname = usePathname()
     const { id } = useParams()
     const { data: infoUser } = useQuery({
         queryKey: ['info_user', id],
@@ -37,42 +76,21 @@ export default function RootLayout({ children }) {
                 </Button>
             </div>
             <div className="mt-28 col-span-2">
-                <Link
-                    href="#"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    prefetch={false}
-                >
-                    Bài viết của tôi
-                </Link>
-                <Link
-                    href={`/user/${id}/info`}
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    prefetch={false}
-                >
-                    Thông tin
-                </Link>
-                <Link
-                    href="#"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    prefetch={false}
-                >
-                    Bài viết đã lưu
-                </Link>
-                <Link
-                    href="#"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    prefetch={false}
-                >
-                    Phim yêu thích
-                </Link>
-                <Link
-                    href="#"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    prefetch={false}
-                >
-                    Nghệ sĩ yêu thích
-                </Link>
-                <Separator />
+                {
+                    menuConfig?.map((item, index) => {
+                        return (
+                            <Link
+                                key={index}
+                                href={item.href(id)}
+                                className={`h-8 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-bold transition-colors ${item.active(pathname, id) ? 'bg-muted text-primary' : ''}`}
+                                prefetch={false}
+                            >
+                                {item.title}
+                            </Link>
+                        )
+                    })
+                }
+                <Separator className='mt-4' />
                 <div className='grid mt-4 gap-4'>
                     {children}
                 </div>

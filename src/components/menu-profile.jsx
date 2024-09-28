@@ -21,8 +21,8 @@ import { useAppDispatch } from "@/redux/store";
 import { setAuthState } from "@/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { getUserInfoById } from "@/services/authApi";
 import Link from "next/link";
+import { getUserInfoById } from "@/services/userApi";
 
 export function MenuProfile({ id }) {
     const router = useRouter();

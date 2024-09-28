@@ -10,7 +10,6 @@ import { Separator } from '@/components/ui/separator'
 import Post from '@/components/post'
 import { useQuery } from '@tanstack/react-query'
 import { getSavedPosts } from '@/services/savedPostApi'
-import { getProfilePostByUserId, getUserInfoById } from '@/services/userApi'
 
 export default function Profile({ params }) {
 
@@ -19,15 +18,8 @@ export default function Profile({ params }) {
     queryFn: getSavedPosts,
   })
 
-  const { data: myPosts } = useQuery({
-    queryKey: ['my_posts', { page: 0, size: 10 }],
-    queryFn: getProfilePostByUserId,
-  })
-
   return (
-    <div>
-
-    </div>
+    <div></div>
   )
 }
 
