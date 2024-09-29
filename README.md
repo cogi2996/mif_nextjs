@@ -77,4 +77,4 @@ This is a web application built with [Next.js](https://nextjs.org/), a React fra
 - Visit `http://localhost:3000/home` to access the application.
 
 ## API Reference
-The frontend utilizes data from the backend API, which can be found in the API documentation [Here](https://github.com/cogi2996/mif_api)
+The frontend utilizes data from the backend API, which can be found in the API documentation [Here](https://documenter.getpostman.com/view/21875363/2sAXqp83yy#93b88b25-cf2c-444c-8f38-ed74c47524f1)
