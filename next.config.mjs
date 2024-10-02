@@ -80,6 +80,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'youtube.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
     crossOrigin: 'anonymous',

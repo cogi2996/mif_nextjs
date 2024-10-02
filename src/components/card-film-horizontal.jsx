@@ -14,7 +14,9 @@ export default function CardFilmHorizontal({ film }) {
         <div className="flex items-center w-full">
             <div className="flex items-center gap-2 hover:cursor-pointer" onClick={() => { handleDetailFilm() }}>
                 <Image
-                    src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
+                    //1111
+                    src={film?.posterUrl}
+                    // src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
                     alt="Movie"
                     width='90'
                     height='200'

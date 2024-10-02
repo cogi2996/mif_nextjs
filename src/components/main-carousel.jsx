@@ -60,9 +60,9 @@ export function MainCarousel() {
                                     onClick={() => handleDetailFilm(film?.id)}
                                 >
                                     <Image
-                                        src="https://intietkiem.com/wp-content/uploads/2019/07/poster-ngang.jpg"
+                                        // src="https://intietkiem.com/wp-content/uploads/2019/07/poster-ngang.jpg"
                                         // Image1111
-                                        // src={film?.posterUrl}
+                                        src={film?.posterUrl}
                                         fill={true}
                                         alt={film?.title}
                                         className="absolute rounded-lg object-cover"

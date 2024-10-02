@@ -24,7 +24,8 @@ export default function CardFilm({ direction, film }) {
         <div className={`gap-4 h-fit ${direction == 'vertical' ? 'flex-col w-fit flex' : 'grid grid-cols-2'}`} onClick={() => handleDetailFilm()}>
             <div className='relative'>
                 <Image
-                    src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
+                    src={film?.posterUrl}
+                    // src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
                     alt="Movie"
                     height={100}
                     width={200}
@@ -36,9 +37,9 @@ export default function CardFilm({ direction, film }) {
             </div>
 
             <div className="grid gap-2">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 max-w-44 sm:max-w-64 md:max-w-full">{film?.title}
+                <p className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 max-w-44 sm:max-w-64 md:max-w-full">{film?.title}
 
-                </h3>
+                </p>
                 {direction == 'vertical' ? (
                     <p className="text-muted-foreground text-sm">{yearRelease} &middot; {film?.duration}</p>
                 ) : (

@@ -5,10 +5,24 @@ import { ComboboxFilmCategory } from '@/components/combobox-category-film'
 import Title from '@/components/title'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { get4RandomMovies, getAllMovies } from '@/services/movieApi'
+import { useQuery } from '@tanstack/react-query'
 import { Clock, Filter, Star, TrendingUp } from 'lucide-react'
 import React from 'react'
 
-export default function page() {
+export default function FilmPage() {
+
+    const { isLoading, data } = useQuery({
+        queryKey: ['movies', { page: 0, size: 10, sort: 'title,asc' }],
+        queryFn: getAllMovies,
+    })
+
+    const { data: data2, isLoading: isLoading2, isError } = useQuery({
+        queryKey: ['radom_film'],
+        queryFn: get4RandomMovies,
+    });
+
+    if (isLoading || isLoading2) return (<div>Loading...</div>)
     return (
         <div className='grid grid-cols-3 gap-10'>
             <div className='grid col-span-2'>
@@ -43,17 +57,17 @@ export default function page() {
                     </div>
                 </div>
                 <div className='grid mt-4 gap-2'>
-                    {Array.from({ length: 100 }).map((_, index) => (
-                        <CardFilmHorizontal key={index} />
+                    {data.content.map((movie, index) => (
+                        <CardFilmHorizontal film={movie} key={index} />
                     ))}
                 </div>
             </div>
             <div className='grid col-span-1 h-fit'>
                 <Title title='Khám phá' isMore={false} />
                 <div className='grid mt-4 gap-2'>
-                    <CardFilmHorizontal />
-                    <CardFilmHorizontal />
-                    <CardFilmHorizontal />
+                    {data2.map((movie, index) => (
+                        <CardFilmHorizontal film={movie} key={index} />
+                    ))}
                 </div>
             </div>
         </div>

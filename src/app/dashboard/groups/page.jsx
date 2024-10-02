@@ -6,6 +6,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DatePickerPopover } from "@/components/date-picker-popover";
 import { MoreHorizontal, X } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function DynamicInfoDateForm() {
     const [fields, setFields] = useState([
@@ -41,38 +42,67 @@ export default function DynamicInfoDateForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            {fields.map((field, index) => (
-                <div key={index} className="space-y-2">
-                    <div className='grid grid-cols-5 gap-4'>
-                        <div className='col-span-3 items-center gap-2'>
-                            <Input
-                                id={`info-${index}`}
-                                value={field.info}
-                                onChange={(e) => handleChangeInfo(index, e.target.value)}
-                                placeholder="Nhập thông tin"
-                            />
-                        </div>
-                        <div className='flex col-span-2 items-center gap-2'>
-                            <DatePickerPopover
-                                selected={field.date}
-                                onSelect={(date) => handleSelectDate(index, date)} />
-                            <Button aria-haspopup="true" size="icon" variant="outline" onClick={() => handleRemoveField(index)}>
-                                <X className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            ))}
+        <div>
+            <div className="bg-background p-6">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Category</TableHead>
+                            <TableHead>Members/ Total Member</TableHead>
+                            <TableHead>Posts</TableHead>
+                            <TableHead>Posts/ Week</TableHead>
+                            <TableHead></TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    {/* <TableBody>
+                        {actorsData?.content?.map((actor) => {
+                            return (
+                                <TableRow key={actor.id}>
+                                    <TableCell>{actor.name}</TableCell>
+                                    <TableCell>10</TableCell>
+                                    <TableCell>10</TableCell>
+                                    <TableCell>10</TableCell>
+                                    <TableCell>{actor.awards.length}</TableCell>
+                                    <TableCell className="flex items-center gap-2">
+                                        <DropdownMenu model={false}>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                    <span className="sr-only">Toggle menu</span>
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                <DropdownMenuItem onClick={() => hanleEditActor(actor.id)}>Edit</DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => hanleDeleteActor(actor.id)}>Delete</DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </TableCell>
+                                </TableRow>
 
-            <Button type="button" onClick={handleAddField} className="w-full">
-                Thêm Thông tin
-            </Button>
-
-            <Button type="submit" className="w-full mt-4">
-                Gửi
-            </Button>
-        </form>
-    );
+                            )
+                        })}
+                    </TableBody> */}
+                </Table>
+                {/* <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0} />
+                        </PaginationItem>
+                        {Array.from({ length: Math.ceil((actorsData?.totalPages || 1)) }).map((_, index) => (
+                            <PaginationItem key={index}>
+                                <PaginationLink href="#" isActive={index === currentPage} onClick={() => handlePageChange(index)}>
+                                    {index + 1}
+                                </PaginationLink>
+                            </PaginationItem>
+                        ))}
+                        <PaginationItem>
+                            <PaginationNext onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= (actorsData?.totalPages || 1) - 1} />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination> */}
+            </div>
+        </div>
+    )
 }

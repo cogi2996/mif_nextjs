@@ -89,6 +89,8 @@ export default function Movies() {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Title</TableHead>
+                            <TableHead>Release</TableHead>
+                            <TableHead>Genre</TableHead>
                             <TableHead>Rating</TableHead>
                             <TableHead>Reviews</TableHead>
                             <TableHead>Awards</TableHead>

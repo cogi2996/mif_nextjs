@@ -51,7 +51,7 @@ const menuConfig = [
         }
     },
     {
-        title: 'Actors',
+        title: 'Groups',
         href: '/dashboard/groups',
         icon: UsersIcon,
         active: function (pathname) {

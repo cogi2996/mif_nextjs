@@ -25,4 +25,7 @@ export const removevotePost = async (postId) => {
     return res.data
 }
 
-// export const deletePost = async()
+export const createPost = async (data) => {
+    const res = await privateApi.post(`/group-posts`, data)
+    return res.data
+}

@@ -12,6 +12,7 @@ import { Plus, Search } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 
 export default function MembersSection({ members, group, pendingInvitations, isOwner }) {
+    console.log('🚀 ~ MembersSection ~ group:', group)
     return (
         <>
             {
@@ -39,7 +40,7 @@ export default function MembersSection({ members, group, pendingInvitations, isO
                     </div>
                     <div className='grid gap-4 mt-4'>
                         <p className='font-bold'>Người thành lập</p>
-                        <CardMember />
+                        <CardMember member={group?.owner} isOwner={true} />
                     </div>
                     <div className="grid grid-cols-1 gap-4 mt-4">
                         <p className='font-bold'>Tham gia gần đây</p>

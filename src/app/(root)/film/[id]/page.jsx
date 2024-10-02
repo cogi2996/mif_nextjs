@@ -36,7 +36,6 @@ export default function DetailMovie() {
     const categoriesName = movie?.genre?.map((element) => {
         return movieCategories?.find((category) => element?.id === category?.id)
     })
-    console.log('🚀 ~ categoriesName ~ categoriesName:', categoriesName)
 
     if (isLoadingMovie) return (<div>Loading...</div>)
     return (
@@ -64,7 +63,8 @@ export default function DetailMovie() {
                 <div className="grid grid-cols-10 gap-1">
                     <div className="col-span-3 flex justify-center">
                         <Image
-                            src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
+                            src={movie?.posterUrl}
+                            // src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
                             alt="Movie Poster"
                             width="300"
                             height="450"
@@ -73,7 +73,7 @@ export default function DetailMovie() {
                     </div>
                     <div className="col-span-7 flex justify-center">
                         <div className="overflow-hidden w-full aspect-video">
-                            <video className="w-full h-full object-cover" src="https://www.youtube.com/watch?v=6hB3S9bIaco" controls />
+                            <iframe className="w-full h-full object-cover" src="https://www.youtube.com/embed/zA3_Bs8xePE?si=e9oUenQ5nHPhpRJ3" allowFullScreen />
                         </div>
                     </div>
                 </div>

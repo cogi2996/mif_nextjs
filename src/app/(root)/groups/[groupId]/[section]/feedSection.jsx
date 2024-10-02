@@ -1,4 +1,5 @@
 'use client'
+import CreatePostDialog from '@/components/dialog-create-post'
 import Post, { PostSkeleton } from '@/components/post'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
@@ -45,9 +46,7 @@ export default function FeedSection({ group }) {
         <div class="grid md:grid-cols-3 gap-4 grid-cols-2">
             <div className="grid gap-8 mt-4 col-span-2">
                 <div className="flex justify-between mt-2 items-center">
-                    <Button className="h-8">
-                        Tạo bài viết
-                    </Button>
+                    <CreatePostDialog groupId={group?.id} />
                     <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" size="sm" className="h-8 gap-1">

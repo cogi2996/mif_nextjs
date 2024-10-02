@@ -105,7 +105,7 @@ export default function Actors() {
                         <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>Movies</TableHead>
-                            <TableHead>Rank</TableHead>
+                            <TableHead>Score Rank</TableHead>
                             <TableHead>Rating</TableHead>
                             <TableHead>Award</TableHead>
                             <TableHead></TableHead>

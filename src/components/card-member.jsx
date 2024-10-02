@@ -74,7 +74,7 @@ export default function CardMember({ member, groupId, type, isOwner }) {
                 </Avatar>
                 <div>
                     <h3 className="font-bold">{member?.displayName}</h3>
-                    {type === 'invitation' || <p className="text-muted-foreground text-xs font-bold">Tham gia cách đây {timeAgo(date)} trước</p>}
+                    {type === 'invitation' || !isOwner || <p className="text-muted-foreground text-xs font-bold">Tham gia cách đây {timeAgo(date)} trước</p>}
                 </div>
             </div>
             {type === 'invitation'
