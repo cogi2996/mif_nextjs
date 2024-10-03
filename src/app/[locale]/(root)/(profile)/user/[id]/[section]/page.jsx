@@ -1,5 +1,5 @@
 'use client'
-import InfoSection from '@/app/(root)/(profile)/user/[id]/[section]/infoSection'
+import InfoSection from '@/app/[locale]/(root)/(profile)/user/[id]/[section]/infoSection'
 import { useParams } from 'next/navigation'
 import React from 'react'
 

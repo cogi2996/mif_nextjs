@@ -1,5 +1,5 @@
 'use client'
-import Background from "@/app/(auth)/bg-film/background";
+import Background from "@/app/[locale]/(auth)/bg-film/background";
 import { useAppSelector } from "@/redux/store";
 import { Film } from "lucide-react";
 import Link from "next/link";

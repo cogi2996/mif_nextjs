@@ -1,0 +1,10 @@
+{
+    "Header": {
+        "home_link": "Home",
+        "film_link": "Phim nổi bật",
+        "news_link": "Tin tức",
+        "groups_link": "Nhóm",
+        "input_placeholder": "Tìm kiếm...",
+        "login": "Đăng nhập"
+    }
+}
