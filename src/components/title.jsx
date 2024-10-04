@@ -1,9 +1,11 @@
 'use client'
 import { ChevronRight } from 'lucide-react'
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function Title({ title, isMore, redirect }) {
+    const t = useTranslations();
     const router = useRouter();
 
     const handleRedirect = () => {
@@ -17,7 +19,7 @@ export default function Title({ title, isMore, redirect }) {
                 <h1 className='text-xl md:text-xl lg:text-2xl font-bold pl-4'>{title}</h1>
             </div>
             {isMore && <div className='flex gap-1 items-center'>
-                <span className='text-xs text-nowrap font-bold'>Xem thêm</span>
+                <span className='text-xs text-nowrap font-bold'>{t('is_more')}</span>
                 <ChevronRight />
             </div>}
         </div>

@@ -1,22 +1,21 @@
 'use client'
 import CardActor from '@/components/card-actor'
 import CardActorHorizontal from '@/components/card-actor-horizontal'
-import CardFilm from '@/components/card-film'
-import CardFilmHorizontal from '@/components/card-film-horizontal'
+import CardMovie from '@/components/card-movie'
+import CardMovieHorizontal from '@/components/card-movie-horizontal'
 import CardGroups from '@/components/card-groups'
 import Title from '@/components/title'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import { searchGroupByGroupName } from '@/services/groupsApi'
-import { searchMoviesByTitle } from '@/services/movieApi'
+import { movieApi } from '@/services/movieApi'
 import { getAllmovieCategories } from '@/services/movieCategoriesApi'
 import { useQuery } from '@tanstack/react-query'
 import { Book, ChevronDown, Clock, FilePen, Filter, Info, LogOut, MessageCircle, Plus, Search, Star, TrendingUp, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Input } from 'postcss'
 import { useState } from 'react'
 
 export default function Page() {
@@ -24,11 +23,7 @@ export default function Page() {
     const searchParams = useSearchParams()
     const search = searchParams.get('q')
 
-    const { isLoading: isLoadingMovies, data: movies } = useQuery({
-        queryKey: ['search_movie', { title: search, page: 0, size: 10 }],
-        queryFn: searchMoviesByTitle,
-    })
-    console.log('🚀 ~ Page ~ movies:', movies)
+    const { isLoadingMovies, movies } = movieApi.query.useSearchMoviesByTitle(0, 10, search)
 
     const { isLoading: isLoadingGroup, data: groups } = useQuery({
         queryKey: ['search_group', { name: search, page: 0, size: 10 }],
@@ -93,7 +88,7 @@ export default function Page() {
                             <div className='grid gap-2 mt-4'>
                                 {movies?.content?.map((movie) => {
                                     return (
-                                        <CardFilmHorizontal key={movie.id} film={movie} />
+                                        <CardMovieHorizontal key={movie.id} movie={movie} />
                                     )
                                 })}
                             </div>

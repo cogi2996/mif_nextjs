@@ -1,26 +1,23 @@
 import ActorCarousel from "@/components/actor-carousel"
 import Loading from "@/components/loading"
 import { MainCarousel } from "@/components/main-carousel"
-import SectionFilmHot from "@/components/section-film-hot"
-import SectionNews from "@/components/section-news-home"
-import SectionRandomFilm from "@/components/section-random-film"
 import Title from "@/components/title"
 import { useTranslations } from "next-intl"
+import SectionHotMovie from "@/app/[locale]/(root)/home/section-hot-movie"
+import SectionNews from "@/app/[locale]/(root)/home/section-news"
+import SectionRandomMovie from "@/app/[locale]/(root)/home/section-random-movie"
 
 
 export default function Home() {
-  const t = useTranslations('Header');
+  const t = useTranslations('Home');
   return (
     <>
-      {/* <Loading /> */}
       <div className="w-full">
 
-        <div className="relative">
-          <MainCarousel />
-        </div>
+        <MainCarousel />
 
         <div className="pt-8 md:pt-12 lg:pt-16">
-          <Title title='Diễn viên nổi bật' isMore='true' redirect='/actor' />
+          <Title title={t('title_section_actor')} isMore='true' redirect='/actor' />
           <ActorCarousel />
         </div>
 
@@ -34,13 +31,14 @@ export default function Home() {
           </div>
 
           <div className="grid mb-8 gap-6 md:gap-8 lg:gap-8 h-fit">
-            <Title title='Phim hot gần đây' isMore='true' redirect='/film' />
+
+            <Title title='Phim hot gần đây' isMore='true' redirect='/movies' />
             <div className="grid gap-5">
-              <SectionFilmHot />
+              <SectionHotMovie />
             </div>
-            <Title title='Phim ngẫu nhiên' isMore='true' redirect='/film' />
+            <Title title='Phim ngẫu nhiên' isMore='true' redirect='/movies' />
             <div className="grid gap-5">
-              <SectionRandomFilm />
+              <SectionRandomMovie />
             </div>
           </div>
         </div>

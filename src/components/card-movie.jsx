@@ -7,56 +7,56 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-export default function CardFilm({ direction, film }) {
+export default function CardMovie({ direction, movie }) {
     const router = useRouter();
 
-    const handleDetailFilm = () => {
-        router.push(`/film/${film.id}`)
+    const handleDetailMovie = () => {
+        router.push(`/movie/${movie.id}`)
     }
 
-    const handleSaveFilm = (e) => {
+    const handleSaveMovie = (e) => {
         e.stopPropagation()
     }
 
-    const yearRelease = film?.releaseDate?.split('-')[0]
+    const yearRelease = movie?.releaseDate?.split('-')[0]
 
     return (
-        <div className={`gap-4 h-fit ${direction == 'vertical' ? 'flex-col w-fit flex' : 'grid grid-cols-2'}`} onClick={() => handleDetailFilm()}>
+        <div className={`gap-4 h-fit ${direction == 'vertical' ? 'flex-col w-fit flex' : 'grid grid-cols-2'}`} onClick={() => handleDetailMovie()}>
             <div className='relative'>
                 <Image
-                    src={film?.posterUrl}
+                    src={movie?.posterUrl}
                     // src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
                     alt="Movie"
                     height={100}
                     width={200}
                     className="rounded-lg object-cover aspect-[3/4] h-full"
                 />
-                <div className='absolute -right-1 -top-0.5' onClick={(e) => handleSaveFilm(e)}>
+                <div className='absolute -right-1 -top-0.5' onClick={(e) => handleSaveMovie(e)}>
                     <BookmarkPlus size={32} />
                 </div>
             </div>
 
             <div className="grid gap-2">
-                <p className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 max-w-44 sm:max-w-64 md:max-w-full">{film?.title}
+                <p className="text-lg md:text-xl lg:text-2xl font-bold line-clamp-2 max-w-44 sm:max-w-64 md:max-w-full">{movie?.title}
 
                 </p>
                 {direction == 'vertical' ? (
-                    <p className="text-muted-foreground text-sm">{yearRelease} &middot; {film?.duration}</p>
+                    <p className="text-muted-foreground text-sm">{yearRelease} &middot; {movie?.duration}</p>
                 ) : (
                     <>
                         <p className="text-muted-foreground text-sm">Năm: {yearRelease}</p>
-                        <p className="text-muted-foreground text-sm">Thời lượng: {film?.duration}p</p>
+                        <p className="text-muted-foreground text-sm">Thời lượng: {movie?.duration}p</p>
                     </>
                 )}
                 <div className="flex items-center space-x-1">
                     <Rating
                         // Rating 1111
-                        ratingInPercent={film?.ratings?.averageRating * 10}
+                        ratingInPercent={movie?.ratings?.averageRating * 10}
                         iconSize="m"
                         showOutOf={true}
                         enableUserInteraction={false}
                     />
-                    <span className="text-xs md:text-sx lg:text-sx">{film?.ratings?.averageRating}/10</span>
+                    <span className="text-xs md:text-sx lg:text-sx">{movie?.ratings?.averageRating}/10</span>
                 </div>
                 <Button>Xem trailer</Button>
             </div>
@@ -64,7 +64,7 @@ export default function CardFilm({ direction, film }) {
     )
 }
 
-export const CardFilmSkeleton = ({ direction }) => {
+export const CardMovieSkeleton = ({ direction }) => {
     return (
         <div className={`grid grid-cols-2 gap-4 h-fit ${direction == 'vertical' ? 'flex-col w-fit' : ''}`}>
             <div>

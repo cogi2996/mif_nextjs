@@ -1,8 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
-
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -17,15 +15,14 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { schemaGroup } from "@/lib/schemas/group.schema";
-import { getAllmovieCategories } from "@/services/movieCategoriesApi";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { createGroup } from '@/services/groupsApi';
-import { toast } from 'react-toastify';
+import { groupsApi } from '@/services/groupsApi';
 import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function DialogCreateGroup({ movieCategories }) {
     const [isOpen, setIsOpen] = useState(false);
-
+    const t = useTranslations('Groups')
     const { control, handleSubmit, register, reset, formState: { errors } } = useForm({
         resolver: zodResolver(schemaGroup),
         defaultValues: {
@@ -37,18 +34,7 @@ export function DialogCreateGroup({ movieCategories }) {
         }
     });
 
-    const mutation = useMutation({
-        mutationFn: createGroup,
-        onSuccess: () => {
-            toast.success('Tạo nhóm thành công')
-            reset();
-            setIsOpen(false);
-        },
-        onError: () => {
-            toast.error('Tạo nhóm thất bại')
-
-        }
-    });
+    const mutation = groupsApi.mutation.useCreateGroup(reset, setIsOpen)
 
     const onSubmit = (data) => {
         mutation.mutate(data);
@@ -57,17 +43,17 @@ export function DialogCreateGroup({ movieCategories }) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button size='sm' onClick={() => setIsOpen(true)}>Tạo nhóm</Button>
+                <Button size='sm' onClick={() => setIsOpen(true)}>{t('DialogCreate.create_group')}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[480px]">
                 <DialogHeader>
-                    <DialogTitle>Tạo nhóm</DialogTitle>
+                    <DialogTitle>{t('DialogCreate.create_group')}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="groupName" className="text-right">
-                                Tên nhóm
+                                {t('DialogCreate.group_name')}
                             </Label>
                             <Input
                                 id="groupName"
@@ -78,7 +64,7 @@ export function DialogCreateGroup({ movieCategories }) {
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="categoryId" className="text-right">
-                                Thể loại
+                                {t('DialogCreate.category')}
                             </Label>
                             <Controller
                                 name="categoryId"
@@ -93,7 +79,7 @@ export function DialogCreateGroup({ movieCategories }) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectLabel>Thể loại</SelectLabel>
+                                                <SelectLabel>{t('DialogCreate.category')}</SelectLabel>
                                                 {movieCategories?.map((category) => (
                                                     <SelectItem key={category.id} value={category.id}>
                                                         {category.categoryName}
@@ -116,23 +102,26 @@ export function DialogCreateGroup({ movieCategories }) {
                                 <RadioGroup value={field.value} onValueChange={field.onChange} className="flex justify-evenly mt-2">
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="SMALL" id="small" />
-                                        <Label htmlFor="small">500 thành viên</Label>
+                                        <Label htmlFor="small">500 {t('members')}</Label>
                                     </div>
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="MEDIUM" id="medium" />
-                                        <Label htmlFor="medium">1000 thành viên</Label>
+                                        <Label htmlFor="medium">1000 {t('members')}</Label>
                                     </div>
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="LARGE" id="large" />
-                                        <Label htmlFor="large">1500 thành viên</Label>
+                                        <Label htmlFor="large">1500 {t('members')}</Label>
                                     </div>
                                 </RadioGroup>
                             )}
                         />
-
                     </div>
                     <DialogFooter>
-                        <Button type="submit" disabled={mutation.isLoading}>Tạo nhóm</Button>
+                        <Button type="submit"
+                            disabled={mutation.isLoading}>
+                            {mutation.isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            {t('DialogCreate.create_group')}
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

@@ -1,6 +1,9 @@
 import { privateApi } from "@/services/config"
+import { useMutation } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
+import { toast } from "react-toastify"
 
-export const createGroup = async (data) => {
+const createGroup = async (data) => {
     const res = await privateApi.post('/groups', data)
     return res.data
 }
@@ -51,7 +54,6 @@ export const findGroupUserNotJoin = async ({ queryKey }) => {
     return res.data
 }
 
-
 export const addPendingInvitation = async ({ groupId, userId }) => {
     const res = await privateApi.post(`/groups/${groupId}/pending-invitations/${userId}`)
     return res.data
@@ -97,4 +99,26 @@ export const searchGroupByGroupName = async ({ queryKey }) => {
         }
     })
     return res.data
+}
+
+export const groupsApi = {
+    query: {
+
+    },
+    mutation: {
+        useCreateGroup(reset, setIsOpen) {
+            const t = useTranslations('Toast');
+            return useMutation({
+                mutationFn: createGroup,
+                onSuccess: () => {
+                    toast.success(t('create_group_successful'))
+                    reset();
+                    setIsOpen(false);
+                },
+                onError: () => {
+                    toast.error(t('create_group_failed'))
+                }
+            })
+        }
+    },
 }

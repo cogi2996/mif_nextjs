@@ -1,7 +1,6 @@
 import Image from "next/image";
 import "./style.css"
 
-
 const images = [
     'https://thanhnien.mediacdn.vn/Uploaded/phongdt/2022_08_04/spider-man-2363.jpg',
     'https://facts.net/wp-content/uploads/2023/06/37-facts-about-the-movie-titanic-1687656865.jpg',
@@ -27,7 +26,7 @@ export default function Background() {
                         {Array.from({ length: 7 }).map((_, colIndex) => {
                             const imageIndex = rowIndex * 3 + colIndex;
                             return (
-                                <div key={colIndex} className="film-strip">
+                                <div key={colIndex} className="movie-strip">
                                     <div className="strip-row">
                                         {Array.from({ length: 8 }).map((_, squareIndex) => (
                                             <div key={squareIndex} className="strip-square"></div>
@@ -37,7 +36,7 @@ export default function Background() {
                                         <div className="strip-frame">
                                             <Image
                                                 src={images[imageIndex]} // Use dynamic images here
-                                                alt={`Film Frame ${imageIndex}`}
+                                                alt={`Movie Frame ${imageIndex}`}
                                                 height={152}
                                                 width={400}
                                                 className="h-[152px]"

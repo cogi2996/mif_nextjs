@@ -42,7 +42,7 @@ const frameworks = [
     },
 ]
 
-export function ComboboxFilmCategory() {
+export function ComboboxMovieCategory() {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("")
 

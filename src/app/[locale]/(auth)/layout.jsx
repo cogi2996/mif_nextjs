@@ -1,5 +1,5 @@
 'use client'
-import Background from "@/app/[locale]/(auth)/bg-film/background";
+import Background from "@/app/[locale]/(auth)/bg-movie/background";
 import { useAppSelector } from "@/redux/store";
 import { Film } from "lucide-react";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function AuthLayout({ children }) {
         </Link>
       </div>
 
-      {/* Background FilmStrip */}
+      {/* Background MovieStrip */}
       <div className="absolute inset-0 z-0 ">
         <Background />
       </div>

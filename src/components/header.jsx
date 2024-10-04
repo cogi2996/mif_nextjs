@@ -14,10 +14,11 @@ import useIsLogin from "@/hooks/useIsLogin"
 import useUserId from "@/hooks/useUserId"
 import SearchHeader from "@/components/search-header"
 import { headerMenuConfig } from "@/lib/navigationConfig"
-
+import { useTranslations } from "next-intl"
 
 export default function Header() {
     const [open, setOpen] = useState(false)
+    const t = useTranslations('Header')
     const isLogin = useIsLogin();
     const userId = useUserId()
     const currentPath = usePathname()
@@ -25,7 +26,7 @@ export default function Header() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {
-        const paths = ['/home', '/film', '/news', '/groups'];
+        const paths = ['/home', '/movies', '/news', '/groups'];
         const matchPath = paths.find(path => currentPath.includes(path));
         if (matchPath) {
             const index = paths.indexOf(matchPath);
@@ -49,7 +50,7 @@ export default function Header() {
                         </SheetTrigger>
                         <SheetContent side="left" className="p-4 ">
                             <div className="flex flex-col gap-4">
-                                {headerMenuConfig.map((item, index) => {
+                                {headerMenuConfig(t).map((item, index) => {
                                     return (
                                         <Link
                                             key={index}
@@ -69,7 +70,7 @@ export default function Header() {
                 </div>
 
                 {/* Display logo for screen desktop */}
-                <Link href="home" className="hidden md:flex items-center gap-2" prefetch={false}>
+                <Link href="/home" className="hidden md:flex items-center gap-2" prefetch={false}>
                     <Film />
                     <span className="text-xl font-bold gap-2 tracking-[.25em]">MIF</span>
                 </Link>
@@ -77,7 +78,7 @@ export default function Header() {
                 {/* Navbar cho màn hình lớn */}
                 <div className="hidden md:flex relative gap-2">
                     <div className="flex items-center gap-6">
-                        {headerMenuConfig.map((item, index) => {
+                        {headerMenuConfig(t).map((item, index) => {
                             return (
                                 <Link
                                     key={index}
@@ -90,7 +91,6 @@ export default function Header() {
                                 >
                                     {item.title}
                                 </Link>
-
                             )
                         })}
                     </div>
@@ -108,7 +108,7 @@ export default function Header() {
                 {
                     !isLogin
                         ?
-                        <Link href='sign-in'>
+                        <Link href='/sign-in'>
                             <Button>Đăng nhập</Button>
                         </Link>
                         :
@@ -127,6 +127,6 @@ export default function Header() {
                         </div>
                 }
             </div>
-        </div>
+        </div >
     )
 }

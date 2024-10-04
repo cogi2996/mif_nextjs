@@ -1,6 +1,6 @@
 'use client'
 import CardActorHorizontal from "@/components/card-actor-horizontal"
-import CardFilm from "@/components/card-film"
+import CardMovie from "@/components/card-movie"
 import CardReview from "@/components/card-review"
 import DialogRating from "@/components/dialog-rating"
 import DynamicImageGallery from "@/components/dynamic-image-gallery"
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { getMovieById } from "@/services/movieApi"
+import { movieApi } from "@/services/movieApi"
 import { getAllmovieCategories } from "@/services/movieCategoriesApi"
 import { useQuery } from "@tanstack/react-query"
 import { Copy, Heart, Star, Triangle } from "lucide-react"
@@ -21,18 +21,13 @@ import { useParams } from "next/navigation"
 export default function DetailMovie() {
     const { id } = useParams();
 
-    const { isLoading: isLoadingMovie, data: movie } = useQuery({
-        queryKey: ['detail_movie', id],
-        queryFn: ({ queryKey }) => getMovieById(queryKey[1])
-    })
+    const { isLoading: isLoadingMovie, data: movie } = movieApi.query.useGetMovieById(id)
 
     const { data: movieCategories } = useQuery({
         queryKey: 'all_movie_categories',
         queryFn: getAllmovieCategories,
     });
 
-    console.log('🚀 ~ DetailMovie ~ movie:', movie)
-    console.log('🚀 ~ DetailMovie ~ movieCategories:', movieCategories)
     const categoriesName = movie?.genre?.map((element) => {
         return movieCategories?.find((category) => element?.id === category?.id)
     })
@@ -221,7 +216,7 @@ export default function DetailMovie() {
                         <div className="grid gap-4">
 
                             <Title title="Khám phá" isMore={false} />
-                            <CardFilm />
+                            <CardMovie />
                         </div>
 
                     </div>

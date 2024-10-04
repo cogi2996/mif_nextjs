@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getTopActors } from '@/services/actorApi'
 import { useRouter } from 'next/navigation'
 import { CountrySelect } from '@/components/country-select'
-import { getAllMovies } from '@/services/movieApi'
+import { movieApi } from '@/services/movieApi'
 
 
 export default function Movies() {
@@ -20,10 +20,8 @@ export default function Movies() {
 
     const router = useRouter();
 
-    const { isLoading: isLoadingMovies, data: moviesData } = useQuery({
-        queryKey: ['all_movies', { page: 0, size: 10 }],
-        queryFn: getAllMovies,
-    })
+    const { isLoadingMovies, moviesData } = movieApi.query.useGetAllMovies(0, 10)
+
 
     console.log('🚀 ~ Movies ~ moviesData:', moviesData)
 

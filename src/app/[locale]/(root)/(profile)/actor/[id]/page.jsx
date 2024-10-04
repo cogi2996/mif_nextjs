@@ -1,13 +1,13 @@
 'use client'
 import CardActor from '@/components/card-actor'
-import CardFilm from '@/components/card-film'
+import CardMovie from '@/components/card-movie'
 import DynamicImageGallery from '@/components/dynamic-image-gallery'
 import Title from '@/components/title'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { getActorById, getActorFilmography } from '@/services/actorApi'
+import { getActorById, getActorMovieography } from '@/services/actorApi'
 import { addFavoriteActor, isActorFavorite, removeFavoriteActor } from '@/services/favoriteActorsApi'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Award, Camera, ChevronDown, CircleDollarSign, Handshake, Heart, HeartOff, LogOut, Triangle } from 'lucide-react'
@@ -22,9 +22,9 @@ export default function Actor({ params }) {
     queryFn: ({ queryKey }) => getActorById(queryKey[1]),
   })
 
-  const { data: actorFilmography } = useQuery({
+  const { data: actorMovieography } = useQuery({
     queryKey: ['actor_ilmography', params.id],
-    queryFn: ({ queryKey }) => getActorFilmography(queryKey[1]),
+    queryFn: ({ queryKey }) => getActorMovieography(queryKey[1]),
   })
 
   const { data: isliked, isLoading } = useQuery({
@@ -148,28 +148,28 @@ export default function Actor({ params }) {
       <div className='mt-4'>
         <Title title="Phim tham gia" isMore={false} />
         {
-          actorFilmography?.length === 0
+          actorMovieography?.length === 0
             ?
             <div className='flex mt-4 font-bold justify-center'>Chưa tham gia bộ phim nào</div>
             :
             <div className='flex mt-4'>
               <Carousel className='w-full h-auto'>
                 <CarouselContent>
-                  {/* {actorFilmography} */}
+                  {/* {actorMovieography} */}
                   <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4 flex justify-center">
-                    <CardFilm direction='vertical' />
+                    <CardMovie direction='vertical' />
                   </CarouselItem>
                   <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4 flex justify-center">
-                    <CardFilm direction='vertical' />
+                    <CardMovie direction='vertical' />
                   </CarouselItem>
                   <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4 flex justify-center">
-                    <CardFilm direction='vertical' />
+                    <CardMovie direction='vertical' />
                   </CarouselItem>
                   <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4 flex justify-center">
-                    <CardFilm direction='vertical' />
+                    <CardMovie direction='vertical' />
                   </CarouselItem>
                   <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4 flex justify-center">
-                    <CardFilm direction='vertical' />
+                    <CardMovie direction='vertical' />
                   </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious />

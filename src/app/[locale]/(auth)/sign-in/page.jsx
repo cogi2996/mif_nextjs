@@ -11,68 +11,45 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { schemaLogin } from '@/lib/schemas/auth.schema'
 import { toast } from 'react-toastify'
 import { useMutation } from '@tanstack/react-query'
-import { loginApi } from '@/services/authApi'
+import { authApi } from '@/services/authApi'
 import { setAuthState } from '@/redux/slices/authSlice'
 import { useAppDispatch } from '@/redux/store'
 import { useRouter } from 'next/navigation'
 import { PasswordInput } from '@/components/password-input'
-import { getUserIdFromToken } from '@/lib/helper'
 
 
 export default function SignIn() {
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const { register, handleSubmit, setValue } = useForm({
+    const { register, handleSubmit, reset } = useForm({
         resolver: zodResolver(schemaLogin),
     })
 
-    const mutation = useMutation({
-        mutationFn: (data) => loginApi(data),
-        onSuccess: (data) => {
-            const id = getUserIdFromToken(data.access_token)
-
-            const authState = {
-                isLogin: true,
-                accessToken: data.access_token,
-                id,
-            }
-
-            dispatch(setAuthState(authState))
-            toast.success('Đăng nhập thành công')
-            router.push('/home');
-        },
-        onError: (error) => {
-            toast.error('Email hoặc mật khẩu không đúng')
-        }
-    })
+    const mutation = authApi.mutation.useLogin(dispatch, router, setAuthState)
 
     const hanleLogin = (data) => {
         mutation.mutate(data);
         if (rememberMe) {
-            localStorage.setItem('email', data.email);
-            localStorage.setItem('password', data.password);
-            localStorage.setItem('rememberMe', 'true')
+            const rememberLogin = {
+                email: data.email,
+                password: data.password,
+                isRememberMe: true
+            }
+            localStorage.setItem('rememberLogin', rememberLogin)
         } else {
-            localStorage.removeItem('email')
-            localStorage.removeItem('password')
-            localStorage.removeItem('rememberMe')
+            localStorage.removeItem('rememberLogin')
         }
     }
 
     useEffect(() => {
-        const savedEmail = localStorage.getItem('email')
-        const savedPassword = localStorage.getItem('password')
-        const savedRememberMe = localStorage.getItem('rememberMe') === 'true'
-
-        if (savedEmail) {
-            setValue('email', savedEmail)
+        const rememberLogin = localStorage.getItem('rememberLogin')
+        if (rememberLogin) {
+            const { savedRememberMe, ...data } = rememberLogin
+            reset(data)
+            setRememberMe(savedRememberMe)
         }
-        if (savedPassword) {
-            setValue('password', savedPassword)
-        }
-        setRememberMe(savedRememberMe)
-    }, [setValue])
+    }, [])
 
     return (
         <div className="flex items-center justify-center">

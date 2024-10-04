@@ -1,10 +1,78 @@
 {
     "Header": {
         "home_link": "Trang Chủ",
-        "film_link": "Phim nổi bật",
+        "movie_link": "Phim nổi bật",
         "news_link": "Tin tức",
         "groups_link": "Nhóm",
         "input_placeholder": "Tìm kiếm...",
         "login": "Đăng nhập"
-    }
+    },
+    "Home": {
+        "title_section_actor": "Diễn viên nổi bật",
+        "title_section_news": "Tin tức",
+        "title_section_hot_moives": "Phim hot gần đây",
+        "title_section_random_moives": "Phim hot gần đây",
+        "more": "Xem thêm",
+        "button_watch_trailer": "Xem trailer"
+    },
+    "Movie": {
+        "title": "Phim đang hot",
+        "category": "Thể loại"
+    },
+    "News": {
+        "title": "Tin tức"
+    },
+    "Groups": {
+        "title": "Nhóm",
+        "all": "Tất cả",
+        "groups_you_have_created": "Nhóm bạn đã tạo",
+        "groups_you_have_joined": "Nhóm bạn tham gia",
+        "you_might_be_interested": "Có thể bạn quan tâm",
+        "input_placeholder": "Tìm kiếm...",
+        "members": "thành viên",
+        "posts_this_week": "bài viết tuần này",
+        "view_group": "Xem nhóm",
+        "join_group": "Tham gia nhóm",
+        "cancel_join_group": "Hủy tham gia",
+        "create_post_button": "Tạo bài viết",
+        "comment": "Bình luận",
+        "save": "Lưu",
+        "more": "Xem thêm",
+        "invite_button": "Mời",
+        "invite_title": "Mời thành viên",
+        "invite_content": "Link/Id của người dùng",
+        "Navbar": {
+            "post": "Bài viết",
+            "member": "Thành viên",
+            "message": "Nhắn tin",
+            "rule": "Quy tắc",
+            "introduce": "Giới thiệu",
+            "statistical": "Thống kê"
+        },
+        "DialogCreate": {
+            "create_group": "Tạo nhóm",
+            "group_name": "Tên nhóm",
+            "category": "Thể loại"
+        }
+    },
+    "Search": {
+        "search_keywords": "Từ khóa tìm kiếm",
+        "all": "Tất cả",
+        "movie": "Phim",
+        "group": "Nhóm",
+        "director_actor": "Đạo diễn/Diễn viên",
+        "not_found": "Không có kế quả tìm kiếm phù hợp"
+    },
+    "Toast": {
+        "create_movie_successful": "Tạo phim thành công",
+        "create_movie_failed": "Tạo phim thất bại",
+        "login_successful": "Đăng nhập thành công",
+        "login_failed": "Email hoặc mật khẩu không đúng",
+        "create_group_successful": "Tạo nhóm thành công",
+        "create_group_failed": "Tạo nhóm thất bại"
+    },
+    "duration": "Thời lượng",
+    "minutes": "phút",
+    "release_day": "Ngày phát hành",
+    "is_more": "Xem thêm"
 }

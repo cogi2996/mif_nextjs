@@ -21,7 +21,7 @@ import { FancyMultiSelect } from "@/components/fancy-multi-select";
 
 
 
-// export default function FilmStrip() {
+// export default function MovieStrip() {
 //     return (
 //         <div className="grid gap-2 rotate-[30deg]">
 //             {Array.from({ length: 4 }).map((_, rowIndex) => (
@@ -29,7 +29,7 @@ import { FancyMultiSelect } from "@/components/fancy-multi-select";
 //                     {Array.from({ length: 4 }).map((_, colIndex) => {
 //                         const imageIndex = rowIndex * 3 + colIndex;
 //                         return (
-//                             <div key={colIndex} className="film-strip">
+//                             <div key={colIndex} className="movie-strip">
 //                                 <div className="strip-row">
 //                                     {Array.from({ length: 7 }).map((_, squareIndex) => (
 //                                         <div key={squareIndex} className="strip-square"></div>
@@ -39,7 +39,7 @@ import { FancyMultiSelect } from "@/components/fancy-multi-select";
 //                                     <div className="strip-frame">
 //                                         <Image
 //                                             src={images[imageIndex]} // Use dynamic images here
-//                                             alt={`Film Frame ${imageIndex}`}
+//                                             alt={`Movie Frame ${imageIndex}`}
 //                                             height={152}
 //                                             width={400}
 //                                             className="h-[152px]"

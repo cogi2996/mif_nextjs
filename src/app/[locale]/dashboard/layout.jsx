@@ -1,5 +1,4 @@
 'use client'
-import Header from "@/components/header";
 import HeaderWithHomeIcon from "@/components/header-with-home-icon";
 import { useAppSelector } from "@/redux/store";
 import { Clapperboard, ClapperboardIcon, House, HouseIcon, LayoutList, LayoutListIcon, LineChart, LineChartIcon, Newspaper, NewspaperIcon, Package, UserRound, UserRoundIcon, Users, UsersIcon } from "lucide-react";

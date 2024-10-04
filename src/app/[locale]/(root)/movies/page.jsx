@@ -1,35 +1,30 @@
 'use client'
 import CardActorHorizontal from '@/components/card-actor-horizontal'
-import CardFilmHorizontal from '@/components/card-film-horizontal'
-import { ComboboxFilmCategory } from '@/components/combobox-category-film'
+import CardMovieHorizontal from '@/components/card-movie-horizontal'
+import { ComboboxMovieCategory } from '@/components/combobox-category-movie'
+import Loading from '@/components/loading'
 import Title from '@/components/title'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { get4RandomMovies, getAllMovies } from '@/services/movieApi'
-import { useQuery } from '@tanstack/react-query'
+import { movieApi } from '@/services/movieApi'
 import { Clock, Filter, Star, TrendingUp } from 'lucide-react'
 import React from 'react'
 
-export default function FilmPage() {
+export default function MoviePage() {
 
-    const { isLoading, data } = useQuery({
-        queryKey: ['movies', { page: 0, size: 10, sort: 'title,asc' }],
-        queryFn: getAllMovies,
-    })
+    const { isLoading, data } = movieApi.query.useGetAllMovies(0, 10)
 
-    const { data: data2, isLoading: isLoading2, isError } = useQuery({
-        queryKey: ['radom_film'],
-        queryFn: get4RandomMovies,
-    });
+    const { data: data2, isLoading: isLoading2 } = movieApi.query.useGetRandomMovies()
+    console.log('🚀 ~ MoviePage ~ data2:', data2)
 
-    if (isLoading || isLoading2) return (<div>Loading...</div>)
+    if (isLoading || isLoading2) return (<Loading />)
     return (
         <div className='grid grid-cols-3 gap-10'>
             <div className='grid col-span-2'>
                 <Title title='Phim đang hot' isMore={false} />
                 <div className='ml-auto mt-4 gap-2'>
                     <div className='flex gap-2 items-center'>
-                        <ComboboxFilmCategory />
+                        <ComboboxMovieCategory />
                         <DropdownMenu modal={false}>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" size="sm" className="h-8 gap-1">
@@ -58,17 +53,17 @@ export default function FilmPage() {
                 </div>
                 <div className='grid mt-4 gap-2'>
                     {data.content.map((movie, index) => (
-                        <CardFilmHorizontal film={movie} key={index} />
+                        <CardMovieHorizontal movie={movie} key={index} />
                     ))}
                 </div>
             </div>
             <div className='grid col-span-1 h-fit'>
                 <Title title='Khám phá' isMore={false} />
-                <div className='grid mt-4 gap-2'>
+                {/* <div className='grid mt-4 gap-2'>
                     {data2.map((movie, index) => (
-                        <CardFilmHorizontal film={movie} key={index} />
+                        <CardMovieHorizontal movie={movie} key={index} />
                     ))}
-                </div>
+                </div> */}
             </div>
         </div>
     )

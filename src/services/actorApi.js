@@ -15,8 +15,8 @@ export const getActorById = async (actorId) => {
     return res.data
 }
 
-export const getActorFilmography = async (actorId) => {
-    const res = await privateApi.get(`/actors/${actorId}/filmography`)
+export const getActorMovieography = async (actorId) => {
+    const res = await privateApi.get(`/actors/${actorId}/movieography`)
     return res.data
 }
 
