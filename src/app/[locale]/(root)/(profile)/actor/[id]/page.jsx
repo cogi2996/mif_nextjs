@@ -7,30 +7,19 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { getActorById, getActorMovieography } from '@/services/actorApi'
-import { addFavoriteActor, isActorFavorite, removeFavoriteActor } from '@/services/favoriteActorsApi'
+import { actorApi } from '@/services/actorApi'
+import { addFavoriteActor, favoriteActorsApi, removeFavoriteActor } from '@/services/favoriteActorsApi'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Award, Camera, ChevronDown, CircleDollarSign, Handshake, Heart, HeartOff, LogOut, Triangle } from 'lucide-react'
-import React, { act, useEffect, useState } from 'react'
+import { Award, Camera, ChevronDown, HeartOff, Triangle } from 'lucide-react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 export default function Actor({ params }) {
   const [liked, setLiked] = useState(false);
 
-  const { data: actor } = useQuery({
-    queryKey: ['actor', params.id],
-    queryFn: ({ queryKey }) => getActorById(queryKey[1]),
-  })
-
-  const { data: actorMovieography } = useQuery({
-    queryKey: ['actor_ilmography', params.id],
-    queryFn: ({ queryKey }) => getActorMovieography(queryKey[1]),
-  })
-
-  const { data: isliked, isLoading } = useQuery({
-    queryKey: ['isActorFavorite', params.id],
-    queryFn: ({ queryKey }) => isActorFavorite(queryKey[1]),
-  });
+  const { data: actor } = actorApi.query.useGetActorById(params.id)
+  const { data: actorMovieography } = actorApi.query.useGetActorMovieography(params.id)
+  const { data: isliked, isLoading } = favoriteActorsApi.query.useIsActorFavorite(params.id)
 
   const addFavoriteActorMutation = useMutation({
     mutationFn: addFavoriteActor,
@@ -148,9 +137,9 @@ export default function Actor({ params }) {
       <div className='mt-4'>
         <Title title="Phim tham gia" isMore={false} />
         {
-          actorMovieography?.length === 0
+          !actorMovieography
             ?
-            <div className='flex mt-4 font-bold justify-center'>Chưa tham gia bộ phim nào</div>
+            <div className='flex mt-4 font-bold justify-center mb-8'>Chưa tham gia bộ phim nào</div>
             :
             <div className='flex mt-4'>
               <Carousel className='w-full h-auto'>
@@ -177,7 +166,6 @@ export default function Actor({ params }) {
               </Carousel>
             </div>
         }
-
       </div>
     </div>
   )

@@ -35,7 +35,7 @@ export default function Background() {
                                     <div className="strip-main">
                                         <div className="strip-frame">
                                             <Image
-                                                src={images[imageIndex]} // Use dynamic images here
+                                                src={images[imageIndex]}
                                                 alt={`Movie Frame ${imageIndex}`}
                                                 height={152}
                                                 width={400}

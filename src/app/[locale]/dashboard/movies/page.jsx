@@ -8,7 +8,6 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import Link from "next/link"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { useQuery } from '@tanstack/react-query'
-import { getTopActors } from '@/services/actorApi'
 import { useRouter } from 'next/navigation'
 import { CountrySelect } from '@/components/country-select'
 import { movieApi } from '@/services/movieApi'
@@ -106,7 +105,7 @@ export default function Movies() {
                                     <TableCell>{movie.awards.length}</TableCell>
                                     <TableCell>{movie.budget}</TableCell>
                                     <TableCell className="flex items-center gap-2">
-                                        <DropdownMenu model={false}>
+                                        <DropdownMenu modal={false}>
                                             <DropdownMenuTrigger asChild>
                                                 <Button aria-haspopup="true" size="icon" variant="ghost">
                                                     <MoreHorizontal className="h-4 w-4" />

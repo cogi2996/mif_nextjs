@@ -22,6 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 export function MainCarousel() {
     const [saved, setSaved] = useState(false);
     const router = useRouter();
+
     const { isLoading, data } = movieApi.query.useGetNewestMovie(0, 6)
 
     const handleDetailMovie = (id) => {
@@ -29,7 +30,7 @@ export function MainCarousel() {
     }
 
     if (isLoading) return (
-        <Skeleton className='w-full h-[300px] md:h-[450px] lg:h-[550px] drop-shadow-2xl rounded-lg'></Skeleton>
+        <Skeleton className='lg:h-[550px] md:h-[450px] h-[300px] w-full drop-shadow-2xl rounded-lg'></Skeleton>
     )
 
     return (
@@ -44,7 +45,7 @@ export function MainCarousel() {
                         delay: 3000,
                     }),
                 ]}
-                className="w-full h-[300px] md:h-[450px] lg:h-[550px] drop-shadow-2xl rounded-lg"
+                className="lg:h-[550px] md:h-[450px] h-[300px] w-full drop-shadow-2xl rounded-lg"
             >
                 <CarouselContent>
                     {data?.content?.map((movie) => (
@@ -52,7 +53,7 @@ export function MainCarousel() {
                             <div className="p-1">
                                 <Card>
                                     <CardContent
-                                        className="relative flex items-center justify-center p-6 h-[300px] md:h-[450px] lg:h-[550px]"
+                                        className="lg:h-[550px] md:h-[450px] h-[300px] relative flex items-center justify-center p-6"
                                         onClick={() => handleDetailMovie(movie?.id)}
                                     >
                                         <Image
@@ -62,11 +63,11 @@ export function MainCarousel() {
                                             className="absolute rounded-lg object-cover"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                                        <div className="absolute bottom-0 left-0 flex flex-col items-start p-2 md:p-8 lg:p-110 space-y-2 md:space-y-2 lg:space-y-6 w-full">
+                                        <div className="lg:space-y-6 lg:p-110  md:p-8  md:space-y-2 space-y-2 absolute bottom-0 left-0 flex flex-col items-start p-2 w-full">
                                             <h1 className="text-xl md:text-3xl lg:text-5xl font-bold text-white">
                                                 {movie?.title}
                                             </h1>
-                                            <div className="flex items-center space-x-2 md:space-x-4">
+                                            <div className="md:space-x-4 space-x-2 flex items-center">
                                                 <Rating
                                                     ratingInPercent={movie.ratings?.averageRating * 10}
                                                     iconSize="l"

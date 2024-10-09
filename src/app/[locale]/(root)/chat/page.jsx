@@ -12,8 +12,8 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import MessageReceived from "@/components/message-received"
-import MessageSent from "@/components/message-sent"
+import MessageReceived from "@/app/[locale]/(root)/chat/(component)/message-received"
+import MessageSent from "@/app/[locale]/(root)/chat/(component)/message-sent"
 
 
 export default function Chat() {

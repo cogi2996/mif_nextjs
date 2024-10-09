@@ -1,7 +1,9 @@
 'use client'
 import HeaderWithHomeIcon from "@/components/header-with-home-icon";
+import { navDashboardMenuConfig } from "@/lib/navigationConfig";
 import { useAppSelector } from "@/redux/store";
 import { Clapperboard, ClapperboardIcon, House, HouseIcon, LayoutList, LayoutListIcon, LineChart, LineChartIcon, Newspaper, NewspaperIcon, Package, UserRound, UserRoundIcon, Users, UsersIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -71,6 +73,8 @@ export default function RootLayout({ children }) {
     const authState = useAppSelector((state) => state.auth.authState);
     const router = useRouter();
     const pathname = usePathname()
+
+    const t = useTranslations('')
     useEffect(() => {
         if (!authState.isLogin)
             router.push('/home')
@@ -83,7 +87,7 @@ export default function RootLayout({ children }) {
                 <div className='grid grid-cols-5 gap-4'>
                     <div className='grid col-span-1 h-fit'>
                         <div className="grid items-start text-sm font-medium ">
-                            {menuConfig.map((item, index) => {
+                            {navDashboardMenuConfig(t).map((item, index) => {
                                 const { href, icon: Icon, title } = item
                                 return (
                                     <Link

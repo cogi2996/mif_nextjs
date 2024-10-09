@@ -3,37 +3,29 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { addMemberToGroup } from '@/services/groupsApi'
-import { useMutation } from '@tanstack/react-query'
+import { groupsApi } from '@/services/groupsApi'
 import { Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
 export default function DialogAddMemberToGroup({ groupId }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const { handleSubmit, register, reset } = useForm();
 
-    const mutation = useMutation({
-        mutationFn: addMemberToGroup,
-        onSuccess: () => {
-            toast.success('Thêm thành viên thành công')
-            reset();
-            setIsOpen(false);
-        },
-        onError: (error) => {
-            toast.error('Thêm thành viên thất bại')
-
-        }
-    });
+    const mutation = groupsApi.mutation.useAddMemberToGroup()
 
     const onSubmit = (data) => {
         data = {
             ...data,
             groupId
         }
-        mutation.mutate(data);
+        mutation.mutate(data, {
+            onSuccess: () => {
+                reset();
+                setIsOpen(false);
+            }
+        });
     };
 
     return (

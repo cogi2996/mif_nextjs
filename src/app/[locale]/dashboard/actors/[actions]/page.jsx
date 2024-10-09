@@ -9,7 +9,7 @@ import { DatePickerPopover } from '@/components/date-picker-popover';
 import { X } from 'lucide-react';
 import { schemaActor } from '@/lib/schemas/actor.schema';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createActor, getActorById } from '@/services/actorApi';
+import { actorApi } from '@/services/actorApi';
 import { toast } from 'react-toastify';
 import { useParams, useSearchParams } from 'next/navigation';
 
@@ -17,11 +17,7 @@ export default function ActionsActor() {
     const [idEdit, setIdEdit] = useState(false)
     const searchParams = useSearchParams();
 
-    const { data: actor, isLoading: isLoading } = useQuery({
-        queryKey: ['actor', idEdit],
-        queryFn: ({ queryKey }) => getActorById(queryKey[1]),
-        enabled: !!idEdit,
-    })
+    const { data: actor, isLoading: isLoading } = actorApi.query.useGetActorById(idEdit, !!idEdit)
     useEffect(() => {
         const id = searchParams.get('id')
         if (id) setIdEdit(id)
@@ -62,15 +58,7 @@ export default function ActionsActor() {
         name: 'awards',
     });
 
-    const createActorMutation = useMutation({
-        mutationFn: (data) => createActor(data),
-        onSuccess: () => {
-            toast.success('Create actor successfully')
-        },
-        onError: () => {
-            toast.error('Create actor fail')
-        }
-    })
+    const createActorMutation = actorApi.mutation.useCreateActor()
 
     const updateActorMutation = useMutation({
         mutationFn: (data) => update

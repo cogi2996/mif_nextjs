@@ -1,18 +1,15 @@
+import useUserId from '@/hooks/useUserId';
 import { useAppSelector } from '@/redux/store';
 import { useEffect, useState } from 'react';
 
-const useIsGroupOwner = (group) => {
+export const useIsGroupOwner = (group) => {
     const [isOwner, setIsOwner] = useState(false);
-    const authState = useAppSelector((state) => state.auth.authState);
+    const userId = useUserId()
     useEffect(() => {
-        const userId = authState.id
-
         if (group && group.owner && userId) {
             setIsOwner(group.owner.id === userId);
         }
-    }, [group, authState.id]);
+    }, [group, userId]);
 
     return isOwner;
 };
-
-export default useIsGroupOwner;

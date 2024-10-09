@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { formatDateTime } from '@/lib/formatter'
 import { CalendarDays, Clock5, Eye, Lock, SquareLibrary, Users } from 'lucide-react'
 import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
 export default function AboutSection({ group, members }) {
     return (
@@ -22,7 +22,7 @@ export default function AboutSection({ group, members }) {
                             Chung tay vì 1 cộng đồng Front-end phát triển.. :)
                         </p>
                         {
-                            group?.isPublic
+                            group.isPublic
                                 ?
                                 <div className='gird gap-4'>
                                     <p className="flex gap-2 font-bold items-center">

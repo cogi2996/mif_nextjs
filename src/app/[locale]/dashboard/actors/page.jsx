@@ -8,7 +8,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import Link from "next/link"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { deleteActor, getTopActors } from '@/services/actorApi'
+import { actorApi, getTopActors } from '@/services/actorApi'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
@@ -25,16 +25,7 @@ export default function Actors() {
         queryFn: getTopActors,
     })
 
-    const deleteMutation = useMutation({
-        mutationFn: deleteActor,
-        onSuccess: () => {
-            toast.success('Actor deleted successfully');
-            queryClient.invalidateQueries('all_movie_categories');
-        },
-        onError: () => {
-            toast.error('Failed to delete actor');
-        },
-    });
+    const deleteMutation = actorApi.mutation.useDeleteActor()
 
     const hanleDeleteActor = async (id) => {
         if (window.confirm('Are you sure you want to delete this item?')) {
@@ -121,7 +112,7 @@ export default function Actors() {
                                     <TableCell>10</TableCell>
                                     <TableCell>{actor.awards.length}</TableCell>
                                     <TableCell className="flex items-center gap-2">
-                                        <DropdownMenu model={false}>
+                                        <DropdownMenu modal={false}>
                                             <DropdownMenuTrigger asChild>
                                                 <Button aria-haspopup="true" size="icon" variant="ghost">
                                                     <MoreHorizontal className="h-4 w-4" />

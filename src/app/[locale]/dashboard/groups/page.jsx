@@ -65,7 +65,7 @@ export default function DynamicInfoDateForm() {
                                     <TableCell>10</TableCell>
                                     <TableCell>{actor.awards.length}</TableCell>
                                     <TableCell className="flex items-center gap-2">
-                                        <DropdownMenu model={false}>
+                                        <DropdownMenu modal={false}>
                                             <DropdownMenuTrigger asChild>
                                                 <Button aria-haspopup="true" size="icon" variant="ghost">
                                                     <MoreHorizontal className="h-4 w-4" />

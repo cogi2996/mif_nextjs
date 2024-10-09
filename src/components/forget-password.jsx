@@ -11,37 +11,37 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function ForgetPassword() {
+export function ForgetPassword({ t }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Label
           className="ml-auto text-sm underline"
         >
-          Quên mật khẩu
+          {t('forget_password_title')}
         </Label>
       </DialogTrigger>
       <DialogContent className="max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Quên mật khẩu</DialogTitle>
+          <DialogTitle>{t('forget_password_title')}</DialogTitle>
           <DialogDescription>
-            Nhập email để quên mật khẩu
+            {t('forget_password_description')}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="displayName" className="text-right">
-              Email
+              {t('email')}
             </Label>
             <Input
               id="email"
-              placeholder="Nhập email"
+              placeholder={t('email')}
               className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Nhận mã xác nhận</Button>
+          <Button type="submit">{t('forget_password_action')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

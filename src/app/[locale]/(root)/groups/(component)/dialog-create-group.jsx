@@ -43,17 +43,17 @@ export function DialogCreateGroup({ movieCategories }) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button size='sm' onClick={() => setIsOpen(true)}>{t('DialogCreate.create_group')}</Button>
+                <Button size='sm' onClick={() => setIsOpen(true)}>{t('DialogCreateGroup.create_group')}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[480px]">
                 <DialogHeader>
-                    <DialogTitle>{t('DialogCreate.create_group')}</DialogTitle>
+                    <DialogTitle>{t('DialogCreateGroup.create_group')}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="groupName" className="text-right">
-                                {t('DialogCreate.group_name')}
+                                {t('DialogCreateGroup.group_name')}
                             </Label>
                             <Input
                                 id="groupName"
@@ -64,7 +64,7 @@ export function DialogCreateGroup({ movieCategories }) {
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="categoryId" className="text-right">
-                                {t('DialogCreate.category')}
+                                {t('DialogCreateGroup.category')}
                             </Label>
                             <Controller
                                 name="categoryId"
@@ -79,7 +79,7 @@ export function DialogCreateGroup({ movieCategories }) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectLabel>{t('DialogCreate.category')}</SelectLabel>
+                                                <SelectLabel>{t('DialogCreateGroup.category')}</SelectLabel>
                                                 {movieCategories?.map((category) => (
                                                     <SelectItem key={category.id} value={category.id}>
                                                         {category.categoryName}
@@ -118,9 +118,9 @@ export function DialogCreateGroup({ movieCategories }) {
                     </div>
                     <DialogFooter>
                         <Button type="submit"
-                            disabled={mutation.isLoading}>
-                            {mutation.isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            {t('DialogCreate.create_group')}
+                            disabled={mutation.isPending}>
+                            {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            {t('DialogCreateGroup.create_group')}
                         </Button>
                     </DialogFooter>
                 </form>

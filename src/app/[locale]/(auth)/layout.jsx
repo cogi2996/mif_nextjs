@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AuthLayout({ children }) {
-  const authState = useAppSelector((state) => state.auth.authState);
   const router = useRouter();
+  const authState = useAppSelector((state) => state.auth.authState);
 
   useEffect(() => {
     if (authState.isLogin)

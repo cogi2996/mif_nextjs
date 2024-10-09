@@ -22,7 +22,6 @@ const getRandomMovies = async () => {
 
 const getAllMovies = async ({ queryKey }) => {
     const [_key, { page, size }] = queryKey
-    console.log('🚀 ~ getAllMovies ~ page:', page, size)
     const res = await privateApi.get('/movies', {
         params: {
             page,
@@ -49,7 +48,7 @@ const getMovieById = async (id) => {
     return res.data
 }
 
-export const createMovie = async (data) => {
+const createMovie = async (data) => {
     const res = await privateApi.post('/movies', data)
     return res.data
 }
@@ -57,7 +56,6 @@ export const createMovie = async (data) => {
 export const movieApi = {
     query: {
         useGetNewestMovie(page, size) {
-            // const queryClinet = useQueryClient()
             return useQuery({
                 queryKey: QUERY_KEY.newestMovies(page, size),
                 queryFn: getNewestMovie,

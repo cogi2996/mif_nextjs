@@ -7,11 +7,10 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAppSelector } from '@/redux/store'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { addPendingInvitation } from '@/services/groupsApi'
+import { groupsApi } from '@/services/groupsApi'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
-import { getCategoryById } from '@/services/movieCategoriesApi'
+
+import { categoryApi } from '@/services/movieCategoriesApi'
 
 export default function CardGroups({ initialStatus, group, categories }) {
   const [joinStatus, setJoinStatus] = useState(initialStatus);
@@ -19,30 +18,15 @@ export default function CardGroups({ initialStatus, group, categories }) {
 
   const router = useRouter();
 
-  const mutation = useMutation({
-    mutationFn: addPendingInvitation,
-    onSuccess: (data) => {
-      toast.success('Gửi lời mời thành công')
-    },
-    onError: (error) => {
-      toast.error('Gửi lời mời thất bại')
-
-      setJoinStatus('join')
-    },
-  });
+  const mutation = groupsApi.mutation.useAddPendingInvitation(setJoinStatus)
 
   const category = categories?.find((category) => group.categoryId === category.id)
 
-  const { data: categoryFromApi, isLoading } = useQuery({
-    queryKey: ['category', group?.categoryId],
-    queryFn: ({ queryKey }) => getCategoryById(queryKey[1]),
-    enabled: !category
-  });
+  const { data: categoryFromApi, isLoading } = categoryApi.query.useGetCategoryById(group?.categoryId, !category)
 
   const handleJoinGroup = () => {
     setJoinStatus('pending')
     mutation.mutate({ groupId: group.id, userId: authState.id });
-
   }
   const handleUnjoinGroup = () => {
     setJoinStatus('join')
@@ -59,7 +43,7 @@ export default function CardGroups({ initialStatus, group, categories }) {
       <CardContent className="flex flex-col gap-2 p-0">
         <Image
           // Image1111
-          src="https://i1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=BWzFqMmUWVFC1OfpPSUqMA"
+          src="/group_default.jpg"
           alt="Movie"
           width={1200}
           height={2500}

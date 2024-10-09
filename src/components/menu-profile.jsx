@@ -22,7 +22,7 @@ import { setAuthState } from "@/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { getUserInfoById } from "@/services/userApi";
+import { userApi } from "@/services/userApi";
 
 export function MenuProfile({ id }) {
     const router = useRouter();
@@ -37,10 +37,7 @@ export function MenuProfile({ id }) {
         router.push('/sign-in');
     }
 
-    const { data, error, isLoading } = useQuery({
-        queryKey: ['info_user', id],
-        queryFn: ({ queryKey }) => getUserInfoById(queryKey[1]),
-    });
+    const { data, isLoading } = userApi.query.useGetUserInfoById(id)
 
     return (
         <>

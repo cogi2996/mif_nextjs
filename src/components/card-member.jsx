@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatDateTime, timeAgo } from '@/lib/formatter'
-import { acceptInvitation, removeMemberFromGroup, removePendingInvitation } from '@/services/groupsApi'
+import { groupsApi } from '@/services/groupsApi'
 import { useMutation } from '@tanstack/react-query'
 import { Check, EllipsisVertical, LogOut, Plus, User, X } from 'lucide-react'
 import Link from 'next/link'
@@ -14,35 +14,9 @@ import { toast } from 'react-toastify'
 export default function CardMember({ member, groupId, type, isOwner }) {
     const date = new Date(member?.joinedAt)
 
-    const acceptInvitationMutation = useMutation({
-        mutationFn: (data) => acceptInvitation(data),
-        onSuccess: (data) => {
-            toast.success("Chấp nhận lời mời thành công")
-        },
-        onError: (error) => {
-            toast.error("Chấp nhận lời mời thất bại")
-        }
-    })
-
-    const rejectInvationMutation = useMutation({
-        mutationFn: (data) => removePendingInvitation(data),
-        onSuccess: (data) => {
-            toast.success("Xóa lời mời thành công")
-        },
-        onError: (error) => {
-            toast.error("Xóa lời mời thất bại")
-        }
-    })
-
-    const removeMemberFromGroupMutation = useMutation({
-        mutationFn: (data) => removeMemberFromGroup(data),
-        onSuccess: (data) => {
-            toast.success("Xóa thành viên thành công")
-        },
-        onError: (error) => {
-            toast.error("Xóa thành viên thất bại")
-        }
-    })
+    const acceptInvitationMutation = groupsApi.mutation.useAcceptInvitation()
+    const rejectInvationMutation = groupsApi.mutation.useRejectInvation()
+    const removeMemberFromGroupMutation = groupsApi.mutation.useRemoveMemberFromGroup()
 
     const handleAcceptInvitation = () => {
         acceptInvitationMutation.mutate({

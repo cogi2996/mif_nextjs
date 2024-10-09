@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { movieApi } from "@/services/movieApi"
-import { getAllmovieCategories } from "@/services/movieCategoriesApi"
+import { categoryApi } from "@/services/movieCategoriesApi"
 import { useQuery } from "@tanstack/react-query"
 import { Copy, Heart, Star, Triangle } from "lucide-react"
 import Image from "next/image"
@@ -23,10 +23,7 @@ export default function DetailMovie() {
 
     const { isLoading: isLoadingMovie, data: movie } = movieApi.query.useGetMovieById(id)
 
-    const { data: movieCategories } = useQuery({
-        queryKey: 'all_movie_categories',
-        queryFn: getAllmovieCategories,
-    });
+    const { data: movieCategories } = categoryApi.query.useGetAllmovieCategories()
 
     const categoriesName = movie?.genre?.map((element) => {
         return movieCategories?.find((category) => element?.id === category?.id)

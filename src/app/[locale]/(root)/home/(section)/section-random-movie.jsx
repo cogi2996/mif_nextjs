@@ -1,14 +1,11 @@
 'use client'
 import CardMovie, { CardMovieSkeleton } from '@/components/card-movie';
-import { get4RandomMovies } from '@/services/movieApi';
+import { get4RandomMovies, movieApi } from '@/services/movieApi';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 
 export default function SectionRandomMovie() {
-    const { data, isLoading, isError } = useQuery({
-        queryKey: ['radom_movie'],
-        queryFn: get4RandomMovies,
-    });
+    const { data, isLoading } = movieApi.query.useGetRandomMovies()
     if (isLoading)
         return (
             <>

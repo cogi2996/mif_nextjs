@@ -5,8 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatDateTime } from '@/lib/formatter'
-import { downvotePost, removevotePost, upvotePost } from '@/services/groupPostApi'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { groupPostApi } from '@/services/groupPostApi'
 import { Bookmark, Ellipsis, EllipsisVertical, Forward, LogOut, MessageCircle, MessageSquareWarning, Play, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,41 +15,10 @@ import { toast } from 'react-toastify'
 export default function Post({ className, post }) {
     const [vote, setVote] = useState(post.userVotes);
     const [voteNumber, setVoteNumber] = useState(post.voteNumber);
-    const queryClient = useQueryClient();
 
-    const upvoteMutation = useMutation({
-        mutationFn: (data) => upvotePost(data),
-        onSuccess: (data) => {
-            toast.success('Upvote')
-            queryClient.invalidateQueries('group_posts')
-        },
-        onError: (error) => {
-            toast.error('Upvote', error)
-        }
-    })
-
-    const downvoteMutation = useMutation({
-        mutationFn: (data) => downvotePost(data),
-        onSuccess: (data) => {
-            toast.success('DOWNVOTE')
-            queryClient.invalidateQueries('group_posts')
-        },
-        onError: (error) => {
-            toast.error('DOWNVOTE', error)
-        }
-    })
-
-    const removevoteMutation = useMutation({
-        mutationFn: (data) => removevotePost(data),
-        onSuccess: (data) => {
-            toast.success('Removevote')
-            queryClient.invalidateQueries('group_posts')
-        },
-        onError: (error) => {
-            toast.error('Removevote', error)
-
-        }
-    })
+    const upvoteMutation = groupPostApi.mutation.useUpVotePost()
+    const downvoteMutation = groupPostApi.mutation.useDownVotePost()
+    const removevoteMutation = groupPostApi.mutation.useRemoveVotePost()
 
     const handleUpvote = (postId) => {
         if (vote === 'UPVOTE') {
@@ -138,14 +106,14 @@ export default function Post({ className, post }) {
                         />
                     </Button>
                 </div>
-                <Link
+                {/* <Link
                     href={`/groups/${post.groupId}/post/${post.id}`}
                 >
                     <Button variant="ghost" className="gap-1 items-center rounded-full">
                         <MessageCircle className='h-5 w-5' />
                         Bình luận
                     </Button>
-                </Link>
+                </Link> */}
                 <Button variant="ghost" className="gap-1 items-center rounded-full">
                     <Bookmark className='h-5 w-5' />
                     Lưu

@@ -115,7 +115,7 @@ export default function Header() {
                         <div className="flex items-center gap-4">
                             <SearchHeader />
                             <NotificationPopover />
-                            <Link href='chat'>
+                            <Link href='/chat'>
                                 <Button variant="ghost" size="icon">
                                     {/* <BadgeIcon icon={MessageCircle} badgeContent={' '} /> */}
                                     <MessageCircle />

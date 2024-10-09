@@ -1,8 +1,8 @@
 'use client'
-import CardActorHorizontal from '@/components/card-actor-horizontal'
-import CardMovieHorizontal from '@/components/card-movie-horizontal'
+import CardMovieHorizontal, { CardMovieHorizontalSkeleton } from '@/components/card-movie-horizontal'
 import { ComboboxMovieCategory } from '@/components/combobox-category-movie'
 import Loading from '@/components/loading'
+import { SectionExploreMovies } from '@/components/section-explore-movies'
 import Title from '@/components/title'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -14,10 +14,7 @@ export default function MoviePage() {
 
     const { isLoading, data } = movieApi.query.useGetAllMovies(0, 10)
 
-    const { data: data2, isLoading: isLoading2 } = movieApi.query.useGetRandomMovies()
-    console.log('🚀 ~ MoviePage ~ data2:', data2)
-
-    if (isLoading || isLoading2) return (<Loading />)
+    if (isLoading) return (<Loading />)
     return (
         <div className='grid grid-cols-3 gap-10'>
             <div className='grid col-span-2'>
@@ -57,14 +54,7 @@ export default function MoviePage() {
                     ))}
                 </div>
             </div>
-            <div className='grid col-span-1 h-fit'>
-                <Title title='Khám phá' isMore={false} />
-                {/* <div className='grid mt-4 gap-2'>
-                    {data2.map((movie, index) => (
-                        <CardMovieHorizontal movie={movie} key={index} />
-                    ))}
-                </div> */}
-            </div>
+            <SectionExploreMovies />
         </div>
     )
 }

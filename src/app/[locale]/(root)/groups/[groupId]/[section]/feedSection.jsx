@@ -1,49 +1,33 @@
 'use client'
-import CreatePostDialog from '@/components/dialog-create-post'
+import CreatePostDialog from '@/app/[locale]/(root)/groups/[groupId]/[section]/(component)/dialog-create-post'
 import Post, { PostSkeleton } from '@/components/post'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { getPostsByGroupId } from '@/services/groupPostApi'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { groupPostApi } from '@/services/groupPostApi'
 import { Clock, Eye, Filter, Lock, SquareLibrary, Star, TrendingUp, Users } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
 export default function FeedSection({ group }) {
-    const observerElem = useRef()
+
+    const t = useTranslations('Groups')
+
     const {
         data,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
         isLoading,
-        isError
-    } = useInfiniteQuery({
-        queryKey: ['group_posts', { groupId: group?.id }],
-        queryFn: getPostsByGroupId,
-        getNextPageParam: (lastPage, allPages) => {
-            const nextPage = allPages.length;
-            return lastPage.last ? undefined : nextPage;
-        },
-    });
+    } = groupPostApi.query.useGetPostsByGroupIdInfinite(group.id)
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting && hasNextPage) {
-                    fetchNextPage();
-                }
-            },
-            { threshold: 1.0 }
-        );
-        if (observerElem.current) observer.observe(observerElem.current);
-        return () => {
-            if (observerElem.current) observer.unobserve(observerElem.current);
-        };
-    }, [hasNextPage, fetchNextPage]);
+    const observerElem = useInfiniteScroll(hasNextPage, fetchNextPage);
+
     return (
-        <div class="grid md:grid-cols-3 gap-4 grid-cols-2">
+        <div className="grid md:grid-cols-3 gap-4 grid-cols-2">
+
             <div className="grid gap-8 mt-4 col-span-2">
                 <div className="flex justify-between mt-2 items-center">
                     <CreatePostDialog groupId={group?.id} />
@@ -89,48 +73,50 @@ export default function FeedSection({ group }) {
                 )}
                 <div ref={observerElem}></div>
                 {!hasNextPage && (
-                    <div className="text-center my-4 text-sm text-muted-foreground">Bạn đã xem hết bài viết</div>
+                    <div className="text-center my-4 text-sm text-muted-foreground">{t('no_more_posts')}</div>
                 )}
             </div>
+
+            {/* Left content */}
             <div className="mt-6 hidden md:block">
                 <Card className="w-full drop-shadow-lg">
                     <CardHeader className='font-bold'>
-                        Giới thiệu
+                        {t('introduce')}
                     </CardHeader>
                     <CardContent className='grid text-sm gap-2'>
-                        <p>
-                            Nơi giao lưu, trao đổi, học hỏi kiến thức về Front-end.
-                            Có thể đăng tin tuyển dụng IT, mọi hình thức quảng cáo,câu kéo member khác sẽ bị ban.
-                            Chỉ được phép đăng bài tuyển dụng nhân sự, các khoá học lập trình vào CN.
-                            Cố tình vi phạm sẽ rời khỏi nhóm
-                            Chung tay vì 1 cộng đồng Front-end phát triển..
-                        </p>
+                        {group.description &&
+                            <p>
+                                {group.description}
+                            </p>
+                        }
                         {
-                            group?.isPublic
+                            group.isPublic
                                 ?
                                 <div>
                                     <p className="flex gap-2 font-bold">
                                         <Users className="h-4 w-4" />
-                                        Công khai
+                                        {t('public_mode')}
                                     </p>
-                                    <p> &middot; Bất kỳ ai cũng có thể nhìn thấy mọi người trong nhóm và những gì họ đăng. </p>
+                                    <p> &middot; {t('public_mode_description')} </p>
                                 </div>
                                 :
                                 <div>
                                     <p className="flex gap-2 font-bold">
                                         <Lock className="h-4 w-4" />
-                                        Riêng tư
+                                        {t('private_mode')}
                                     </p>
-                                    <p> &middot; Chỉ thành viên mới nhìn thấy mọi người trong nhóm và những gì họ đăng. </p>
+                                    <p> &middot; {t('private_mode_description')} </p>
                                 </div>
                         }
                         <p className="flex gap-2 font-bold">
                             <Eye className="h-4 w-4" />
-                            Hiển thị </p>
-                        <p>&middot; Ai cũng có thể tìm thấy nhóm này. </p>
+                            {t('display_mode')}
+                        </p>
+                        <p>&middot; {t('display_mode_description')} </p>
                         <p className="flex gap-2 font-bold">
                             <SquareLibrary className="h-4 w-4" />
-                            Thể loại</p>
+                            {t('category')}
+                        </p>
                         <p>&middot; Phim hành động</p>
                     </CardContent>
                     <CardFooter>
@@ -139,7 +125,7 @@ export default function FeedSection({ group }) {
                                 href={`/groups/${group?.id}/about`}
                                 className='w-full'
                             >
-                                Xem thêm
+                                {t('more')}
                             </Link>
                         </Button>
                     </CardFooter>

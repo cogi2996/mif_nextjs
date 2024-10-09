@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { schemaMovie } from '@/lib/schemas/movie.schema';
-import { createMovie } from '@/services/movieApi';
-import { getAllmovieCategories } from '@/services/movieCategoriesApi';
+import { movieApi } from '@/services/movieApi';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { X } from 'lucide-react';
@@ -42,8 +41,6 @@ export default function ActionsMovie() {
     });
     const [selectedGenres, setSelectedGenres] = useState([]);
 
-    console.log('🚀 ~ ActionsMovie ~ errors:', errors)
-
     const handleSelectionChange = (selected) => {
         setValue('genreIds', selected.map(option => option.value));
     };
@@ -53,20 +50,8 @@ export default function ActionsMovie() {
         name: 'awards',
     });
 
-    const { data: movieCategories } = useQuery({
-        queryKey: 'all_movie_categories',
-        queryFn: getAllmovieCategories,
-    });
-
-    const createMovieMutation = useMutation({
-        mutationFn: (data) => createMovie(data),
-        onSuccess: () => {
-            toast.success('Create movie successfully')
-        },
-        onError: () => {
-            toast.error('Create movie fail')
-        }
-    })
+    const { data: movieCategories } = categoryApi.query.useGetAllmovieCategories()
+    const createMovieMutation = movieApi.mutation.useCreateMovieMutation()
 
     const onSubmit = (data) => {
         createMovieMutation.mutate(data)

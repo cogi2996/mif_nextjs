@@ -6,31 +6,18 @@ import { ArrowUpDown, Calendar, ChevronLeft, ChevronRight, Ellipsis, Eye, FilePe
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import Link from "next/link"
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { deleteCategory, getAllmovieCategories } from '@/services/movieCategoriesApi'
+import { useQueryClient } from '@tanstack/react-query'
+import { categoryApi } from '@/services/movieCategoriesApi'
 import DialogCategory from '@/components/dialog-category'
-import { toast } from 'react-toastify'
 
 
 export default function CategoriesPage() {
     const queryClient = useQueryClient();
     const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [idEdit, setIdEdit] = useState(false);
-    const { data: movieCategories } = useQuery({
-        queryKey: 'all_movie_categories',
-        queryFn: getAllmovieCategories,
-    });
+    const { data: movieCategories } = categoryApi.query.useGetAllmovieCategories()
 
-    const deleteMutation = useMutation({
-        mutationFn: deleteCategory,
-        onSuccess: () => {
-            toast.success('Category deleted successfully');
-            queryClient.invalidateQueries('all_movie_categories');
-        },
-        onError: () => {
-            toast.error('Failed to delete category');
-        },
-    });
+    const deleteMutation = categoryApi.mutation.useDeleteCategory()
 
     const hanleDeleteCategory = async (id) => {
         if (window.confirm('Are you sure you want to delete this item?')) {
@@ -111,7 +98,7 @@ export default function CategoriesPage() {
                                     <TableCell>7.9</TableCell>
                                     <TableCell>100</TableCell>
                                     <TableCell className="flex items-center gap-2">
-                                        <DropdownMenu model={false}>
+                                        <DropdownMenu modal={false}>
                                             <DropdownMenuTrigger asChild>
                                                 <Button aria-haspopup="true" size="icon" variant="ghost">
                                                     <MoreHorizontal className="h-4 w-4" />

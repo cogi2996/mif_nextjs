@@ -10,7 +10,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Separator } from '@/components/ui/separator'
 import { searchGroupByGroupName } from '@/services/groupsApi'
 import { movieApi } from '@/services/movieApi'
-import { getAllmovieCategories } from '@/services/movieCategoriesApi'
 import { useQuery } from '@tanstack/react-query'
 import { Book, ChevronDown, Clock, FilePen, Filter, Info, LogOut, MessageCircle, Plus, Search, Star, TrendingUp, Users } from 'lucide-react'
 import Image from 'next/image'
@@ -30,14 +29,8 @@ export default function Page() {
         queryFn: searchGroupByGroupName,
     })
 
-    const { data: movieCategories } = useQuery({
-        queryKey: 'all_movie_categories',
-        queryFn: getAllmovieCategories,
-    });
-
-
+    const { data: movieCategories } = categoryApi.query.useGetAllmovieCategories()
     const noResults = groups?.content?.length === 0 && movies?.content?.length === 0;
-    console.log('🚀 ~ Page ~ noResults:', noResults)
     return (
         <div className='max-w-2xl mx-auto'>
             <div className='text-2xl font-bold'>

@@ -1,28 +1,20 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { schemaCategory } from '@/lib/schemas/category.schema'
-import { createCategory, getCategoryById, updateCategory } from '@/services/movieCategoriesApi'
+import { categoryApi } from '@/services/movieCategoriesApi'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 export default function DialogCategory({ isOpenDialog, setIsOpenDialog, queryClient, idEdit }) {
-    console.log('🚀 ~ DialogCategory ~ idEdit:', idEdit)
     const { handleSubmit, register, reset } = useForm({
         resolver: zodResolver(schemaCategory),
     });
 
-    const { data: category, isLoading: isLoadingCategory } = useQuery({
-        queryKey: ['category', idEdit],
-        queryFn: ({ queryKey }) => getCategoryById(queryKey[1]),
-        enabled: !!idEdit,
-    });
-
-    console.log('🚀 ~ DialogCategory ~ category:', category)
     useEffect(() => {
         if (category) {
             reset({
@@ -32,44 +24,28 @@ export default function DialogCategory({ isOpenDialog, setIsOpenDialog, queryCli
         }
     }, [category, reset]);
 
-
-
-    const createCategoryMutation = useMutation({
-        mutationFn: createCategory,
-        onSuccess: () => {
-            toast.success('Create Cateogry Successfully')
-            reset();
-            queryClient.invalidateQueries('all_movie_categories');
-            setIsOpenDialog(false);
-        },
-        onError: () => {
-            toast.error('Create Cateogry Fail')
-
-        }
-    });
-
-    const updateCategoryMutation = useMutation({
-        mutationFn: updateCategory,
-        onSuccess: () => {
-            toast.success('Update Cateogry Successfully')
-            reset();
-            queryClient.invalidateQueries('all_movie_categories');
-            setIsOpenDialog(false);
-        },
-        onError: () => {
-            toast.error('Update Cateogry Fail')
-
-        }
-    })
+    const { data: category, isLoading: isLoadingCategory } = categoryApi.query.useGetCategoryById(idEdit, !!idEdit)
+    const createCategoryMutation = categoryApi.mutation.useCreateCategory()
+    const updateCategoryMutation = categoryApi.mutation.useDeleteCategory()
 
     const onSubmit = (data) => {
         idEdit ?
             updateCategoryMutation.mutate({
                 id: idEdit,
                 ...data
+            }, {
+                onSuccess: () => {
+                    reset();
+                    setIsOpenDialog(false);
+                }
             })
             :
-            createCategoryMutation.mutate(data);
+            createCategoryMutation.mutate(data, {
+                onSuccess: () => {
+                    reset();
+                    setIsOpenDialog(false);
+                }
+            });
     };
 
     return (

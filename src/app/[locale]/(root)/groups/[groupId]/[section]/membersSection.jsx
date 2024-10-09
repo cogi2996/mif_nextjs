@@ -6,8 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
-import { getPostsByGroupId } from '@/services/groupPostApi'
-import { useInfiniteQuery } from '@tanstack/react-query'
 import { Plus, Search } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 

@@ -1,7 +1,6 @@
 'use client'
 import CardMovie, { CardMovieSkeleton } from '@/components/card-movie';
 import { movieApi } from '@/services/movieApi';
-import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 
 export default function SectionHotMovie() {
