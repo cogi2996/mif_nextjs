@@ -1,51 +1,44 @@
-// import { store } from '@/redux/store.js'
-// import { NextResponse } from 'next/server';
-// // Các route mà người dùng chưa đăng nhập có thể truy cập
-// const publicRoutes = ['/home', '/sign-in', '/sign-up'];
-
-// export default function middleware(request) {
-
-//     // const state = store.getState();
-//     // const token = state?.auth?.authState?.accessToken;
-//     // console.log('🚀 ~ middleware ~ token:', token)
-
-//     // Lấy đường dẫn hiện tại
-//     const currentPath = request.nextUrl.pathname;
-//     console.log('🚀 ~ middleware ~ currentPath:', currentPath)
-
-//     // Nếu người dùng đã đăng nhập và cố vào trang login hoặc register
-//     // if (token && (currentPath === '/sign-in' || currentPath === '/sign-up')) {
-//     //     return NextResponse.redirect(new URL('/', request.url)); // Điều hướng về trang home
-//     // }
-
-//     // Nếu người dùng chưa đăng nhập và cố vào các trang không phải home, login, register
-//     // if (!token && !publicRoutes.includes(currentPath)) {
-//     //     return NextResponse.redirect(new URL('/login', request.url)); // Điều hướng về trang đăng nhập
-//     // }
-
-//     // Nếu tất cả các điều kiện đều thỏa mãn, tiếp tục truy cập
-//     return NextResponse.next();
-// }
-
-// // Áp dụng middleware cho tất cả các route
-// export const config = {
-//     matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-// };
-
 import createMiddleware from 'next-intl/middleware';
+import { NextResponse } from 'next/server';
 import { routing } from './i18n/routing';
 
-export default createMiddleware(routing);
+// Hàm để kiểm tra xem người dùng có đăng nhập hay không dựa trên header Authorization
+function isAuthenticated(req) {
+    // console.log('🚀 ~ isAuthenticated ~ req:', req.headers)
+    // Lấy header Authorization
+    const authHeader = req.headers.get('Authorization');
+    // console.log('🚀 ~ isAuthenticated ~ authHeader:', authHeader)
+
+    // Kiểm tra nếu header Authorization có định dạng 'Bearer <token>'
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.split(' ')[1]; // Tách lấy phần token
+        return !!token; // Trả về true nếu có token, ngược lại là false
+    }
+
+    return false; // Trả về false nếu không có Authorization header hoặc token không hợp lệ
+}
+
+export default function middleware(req) {
+    const { pathname } = req.nextUrl;
+    const isAuth = isAuthenticated(req);
+
+    // Nếu người dùng đã đăng nhập, không cho vào trang login
+    // if (pathname.startsWith('/login') && isAuth) {
+    //     return NextResponse.redirect(new URL('/', req.url)); // Redirect đến trang home hoặc trang phù hợp
+    // }
+
+    // Nếu người dùng chưa đăng nhập, điều hướng đến trang login
+    // if (!isAuth && !pathname.startsWith('/login')) {
+    //     return NextResponse.redirect(new URL('/login', req.url));
+    // }
+
+    // Trường hợp không cần điều hướng, tiếp tục với middleware quốc tế hoá
+    return createMiddleware(routing)(req);
+}
 
 export const config = {
-    // Matcher entries are linked with a logical "or", therefore
-    // if one of them matches, the middleware will be invoked.
     matcher: [
-        // Match all pathnames except for
-        // - … if they start with `/api`, `/_next` or `/_vercel`
-        // - … the ones containing a dot (e.g. `favicon.ico`)
         '/((?!api|_next|_vercel|.*\\..*).*)',
-        // However, match all pathnames within `/users`, optionally with a locale prefix
         '/([\\w-]+)?/users/(.+)'
     ]
 };
